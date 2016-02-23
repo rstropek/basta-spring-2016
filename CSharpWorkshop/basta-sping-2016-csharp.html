@@ -14,18 +14,18 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-    <link rel="stylesheet" href="/css/reveal.css">
-    <link rel="stylesheet" href="/css/theme/rainer.css" id="theme">
+    <link rel="stylesheet" href="../css/reveal.css">
+    <link rel="stylesheet" href="../css/theme/rainer.css" id="theme">
 
     <!-- Code syntax highlighting -->
-    <link rel="stylesheet" href="/lib/css/zenburn.css">
+    <link rel="stylesheet" href="../lib/css/zenburn.css">
 
     <!-- Printing and PDF exports -->
     <script>
         var link = document.createElement( 'link' );
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? '/css/print/pdf.css' : '/css/print/paper.css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../css/print/pdf.css' : '../css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
 
@@ -39,7 +39,7 @@
     <div class="reveal">
 
         <div class="slides">
-            <section data-background="/img/basta-title.jpg">
+            <section data-background="../img/basta-title.jpg">
                 <h2 style="margin-top: 300px;">C# Revolution</h2>
 
                 <p>Rainer Stropek | time cockpit</p>
@@ -51,7 +51,7 @@
 
             </section>
 
-            <section data-background="/img/basta-background.jpg">
+            <section data-background="../img/basta-background.jpg">
                 <h2>Agenda (German)</h2>
 
                 <small>
@@ -75,8 +75,8 @@
                 </small>
             </section>
 
-            <section data-background="/img/basta-background.jpg">
-                <section data-background="/img/basta-title.jpg">
+            <section data-background="../img/basta-background.jpg">
+                <section data-background="../img/basta-title.jpg">
                     <h2 style="margin-top: 300px;">Getting Started</h2>
                 </section>
                 
@@ -204,8 +204,8 @@
                 </section>
             </section>
             
-            <section data-background="/img/basta-background.jpg">
-                <section data-background="/img/basta-title.jpg">
+            <section data-background="../img/basta-background.jpg">
+                <section data-background="../img/basta-title.jpg">
                     <h2 style="margin-top: 300px;">Projects</h2>
                     <small><code>project.json</code></small>
                 </section>
@@ -391,7 +391,7 @@ public static void Main(string[] args)
 }
                     </code></pre>
                     
-                    <img src="/img/nuget-shared.png" />
+                    <img src="../img/nuget-shared.png" />
                     
                     <p>See sample <code>30-shared-project</code></p>
                 </section>
@@ -432,7 +432,7 @@ public static void Main(string[] args)
                     <p>Create NuGet package with DNU<br/>
                     <small><code>dnu pack [ --configuration ... ]</code></small></p>
                     
-                    <img src="/img/nuget-lib.png" />
+                    <img src="../img/nuget-lib.png" />
                     
                     <p>See sample <code>40-library</code></p>                    
                 </section>
@@ -490,8 +490,8 @@ public static void Main(string[] args)
                 </section>
             </section>
 
-            <section data-background="/img/basta-background.jpg">
-                <section data-background="/img/basta-title.jpg">
+            <section data-background="../img/basta-background.jpg">
+                <section data-background="../img/basta-title.jpg">
                     <h2 style="margin-top: 300px;">ASP.NET Fundamentals</h2>
                 </section>
                 
@@ -500,16 +500,16 @@ public static void Main(string[] args)
                 </section>
             </section>
 
-            <section data-background="/img/basta-background.jpg">
-                <section data-background="/img/basta-title.jpg">
+            <section data-background="../img/basta-background.jpg">
+                <section data-background="../img/basta-title.jpg">
                     <h2 style="margin-top: 300px;">Testing</h2>
                 </section>
             </section>
         </div>
     </div>
 
-    <script src="/lib/js/head.min.js"></script>
-    <script src="/js/reveal.js"></script>
+    <script src="../lib/js/head.min.js"></script>
+    <script src="../js/reveal.js"></script>
 
     <script>
         // Full list of configuration options available at:
@@ -525,12 +525,12 @@ public static void Main(string[] args)
 
 				// Optional reveal.js plugins
 				dependencies: [
-					{ src: '/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: '/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: '/plugin/zoom-js/zoom.js', async: true },
-					{ src: '/plugin/notes/notes.js', async: true }
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../plugin/notes/notes.js', async: true }
 				]
 			});
             
