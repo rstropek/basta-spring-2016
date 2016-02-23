@@ -49,6 +49,7 @@
                     <a href="https://github.com/rstropek">GitHub</a>
                 </p>
 
+                <small>Samples see <a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop" target="_blank">GitHub</a></small>
             </section>
 
             <section data-background="../img/basta-background.jpg">
@@ -143,9 +144,7 @@
 
                 <section>
                     <h2>Demo</h2>
-                    <p><small>
-                        Sample: <code>10-console-hello-world</code>
-                    </small></p>
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/10-console-hello-world" target="_blank">Sample on GitHub</a></p>
                     
                     <ul>
                         <li>Introduction to DNVM</li>
@@ -238,7 +237,7 @@ namespace myApp
   }
 }                  </code></pre>
 
-                    <p>See also sample <code>20-from-scratch</code></p>
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/20-from-scratch/myApp" target="_blank">Sample on GitHub</a></p>
                 </section>
                 
                 <section>
@@ -393,7 +392,7 @@ public static void Main(string[] args)
                     
                     <img src="../img/nuget-shared.png" />
                     
-                    <p>See sample <code>30-shared-project</code></p>
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/30-shared-project" target="_blank">Sample on GitHub</a></p>
                 </section>
 
                 <section>
@@ -423,7 +422,7 @@ public static void Main(string[] args)
 }
                     </code></pre>      
                     
-                    <small>See sample <code>40-library</code></small>                    
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/40-library" target="_blank">Sample on GitHub</a></p>
                 </section>
 
                 <section>
@@ -434,7 +433,7 @@ public static void Main(string[] args)
                     
                     <img src="../img/nuget-lib.png" />
                     
-                    <p>See sample <code>40-library</code></p>                    
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/40-library" target="_blank">Sample on GitHub</a></p>
                 </section>
                 
                 <section>
@@ -496,15 +495,295 @@ public static void Main(string[] args)
                 </section>
                 
                 <section>
+                    <h2>Startup</h2>
                     
+                    <p><code>Main</code> in our code or in referenced assemblies<br/>
+                    <small>See e.g. <a href="https://github.com/aspnet/KestrelHttpServer/blob/1.0.0-rc1/src/Microsoft.AspNet.Server.Kestrel/Program.cs" target="_blank">Kestrel's <code>Main</code> method</a></small></p>
+
+                    <pre><code class="hlcs" data-trim contenteditable>
+public class Program
+{
+    public void Main(string[] args) => WebApplication.Run&lt;Startup&gt;(args);
+}
+                    </code></pre>
+
+                    <p><a href="https://docs.asp.net/en/latest/fundamentals/startup.html#the-startup-class" target="_blank">Startup</a> 
+                    class is detected based on conventions<br/>
+                    <small>Supports <a href="https://docs.asp.net/en/latest/fundamentals/environments.html#startup-conventions" target="_blank">multiple environments</a></small></p> 
+
+                    <pre><code class="hlcs" data-trim contenteditable>
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    { ... }
+
+    public void Configure(IApplicationBuilder app)
+    { ... }
+}
+                        </code></pre>
+                    
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/50-simplest-aspnet/myApp" target="_blank">Sample on GitHub</a></p>
+                </section>
+                         
+                <section>
+                    <h2>Startup Services</h2>
+                    
+                    <p>During startup, application services are available<br/>
+                    <small><a href="https://docs.asp.net/en/latest/fundamentals/startup.html#services-available-in-startup" target="_blank">List of services</a></small></p>
+
+                    <pre><code class="hlcs" data-trim contenteditable>
+public class Startup
+{
+    // Note constructor injection here
+    public Startup(IApplicationEnvironment appEnv, IHostingEnvironment env)
+    {
+        Console.WriteLine($"App name: {appEnv.ApplicationName}");
+        Console.WriteLine($"Root path: {env.WebRootPath}");
+    }
+    ...
+}
+                    </code></pre>
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/50-simplest-aspnet/myApp" target="_blank">Sample on GitHub</a></p>
+                </section>
+                         
+                <section>
+                    <h2><code>Configure</code> and <code>ConfigureServices</code></h2>
+
+                    <ul>
+                        <li>
+                            <a href="https://docs.asp.net/en/latest/fundamentals/startup.html#the-configureservices-method" target="_blank"><code>ConfigureServices</code></a> (optional):
+                            Configure <a href="https://docs.asp.net/en/latest/fundamentals/dependency-injection.html" target="_blank">dependency injection</a>.
+                        </li>
+                        <li>
+                            <a href="https://docs.asp.net/en/latest/fundamentals/startup.html#the-configure-method" target="_blank"><code>Configure</code></a>:
+                            Build pipeline by e.g. adding <a href="https://docs.asp.net/en/latest/fundamentals/middleware.html" target="_blank">middlewares</a>.
+                        </li>
+                    </ul>                    
+                        
+                    <pre><code class="hlcs" data-trim contenteditable>
+public void Configure(IApplicationBuilder app)
+{
+    app.Use(async (context, next) => {
+        await context.Response.WriteAsync(">>> Hello ");
+        await next();
+        await context.Response.WriteAsync("World <<<");
+    });
+    app.Map("/beautiful", beautifulApp => beautifulApp.Run(
+        async context => await context.Response.WriteAsync("beautiful ")));
+}
+                    </code></pre>
+
+                    <p>Note: Encapsulate complex logic in middleware<br/>
+                    <small><a href="https://docs.asp.net/en/latest/fundamentals/middleware.html" target="_blank">Details</a></small></p>
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/50-simplest-aspnet/myApp" target="_blank">Sample on GitHub</a></p>
+                </section>
+
+                <section>
+                    <h2>Visual Studio Demo</h2>
+                    
+                    <ul>
+                        <li>Create empty ASP.NET 5 project<br/>
+                        <small>Walkthrough generated code</small></li>
+                        <li>Add <code>Microsoft.AspNet.StaticFiles</code> dependency<br/>
+                        <small><a href="https://docs.asp.net/en/latest/fundamentals/static-files.html" target="_blank">More about static files</a></small></li>
+                        <li>Add static files middleware in <code>Configure</code></li>
+                        <li>Run in IIS with <a href="https://docs.asp.net/en/latest/hosting/http-platformhandler.html" target="_blank">HTTP Platform Handler</a></li>
+                        <li>Run with <code>dnx web</code> (self-hosted)</li>
+                        <li>Publish to Azure from Visual Studio</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Linux Demo with <a href="https://www.docker.com/" target="_blank">Docker</a></h2>
+                    
+                    <ul>
+                        <li>Connect to VM in Azure with PuTTY</li>
+                        <li>Copy sample to VM with FileZilla</li>
+                        <li>Get <a href="https://hub.docker.com/r/microsoft/aspnet/" target="_blank">ASP.NET Docker Image</a></li>
+                        <li>Start Docker container</br/>
+                        <small><code>docker run -it -v ~/myApp:/src -p 80:5000 microsoft/aspnet /bin/bash</code></small></li>
+                        <li>Start web app and show it in browser</li> 
+                    </ul>
+                        
+                    <pre><code class="hlbash" data-trim contenteditable>
+dnvm install 1.0.0-rc1-update1 -r coreclr
+dnvm use 1.0.0-rc1-update1 -r mono
+dnu restore
+dnvm use 1.0.0-rc1-update1 -r coreclr
+dnx web
+                    </code></pre>
+                    
+                    <small><a href="https://github.com/dotnet/coreclr/blob/master/Documentation/install/get-dotnetcore-dnx-linux.md" target="_blank">Details about DNX on Linux</a></small>
+                </section>
+                         
+                <section>
+                    <h2>Diagnostics</h2>
+
+                    <p>Control environment with environment variables<br/>
+                    <small>Can be done directly in VS</small></p>
+                        
+                    <pre><code class="hlcs" data-trim contenteditable>
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    if (env.IsDevelopment())
+    {
+        // Running in development mode
+        app.UseDeveloperExceptionPage();
+        app.UseRuntimeInfoPage();
+    }
+
+    app.Use(async (context, next) =>
+    {
+        if (context.Request.Query.ContainsKey("exception"))
+        {
+            throw new InvalidOperationException("Something bad happened ...");
+        }
+
+        await next();
+    });
+    ...
+}
+                    </code></pre>
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/90-aspnet-angular" target="_blank">Sample on GitHub</a></p>
+                </section>
+                         
+                <section>
+                    <h2>Configuration</h2>
+
+                    <p>No <code>web.config</code> anymore</p>
+                    <p>Key/value pair settings from different providers<br/>
+                    <small>E.g. memory, environment variables, JSON, INI, XML</small></p>
+                    <p>Extensible<br/>
+                    <small><a href="https://docs.asp.net/en/latest/fundamentals/configuration.html#writing-custom-providers" target="_blank">Details about writing custom providers</a></small></p>
+                    <p><a href="https://docs.asp.net/en/latest/fundamentals/configuration.html#using-options-and-configuration-objects" target="_blank">Options pattern</a> for DI integration</p>
+                </section>
+
+                <section>
+                    <h2>Configuration Demo</h2>
+                    
+                    <ul>
+                        <li>In-memory configuration</li>
+                        <li>JSON configuration</li>
+                        <li>Configuration via command line</li>
+                        <li>Configuration with environment variables</li>
+                        <li>Options pattern</li>
+                    </ul>
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/55-configuration/myApp" target="_blank">Sample on GitHub</a></p>
+                    <p>See <a href="https://github.com/Microsoft/ApplicationInsights-aspnetcore/blob/v1.0.0-rc1/src/Microsoft.ApplicationInsights.AspNet/Extensions/ApplicationInsightsExtensions.cs#L113-L151" target="_blank">practical use in AppInsights</a></p>
+                </section>
+                         
+                <section>
+                    <h2>Logging</h2>
+
+                    <p>Support for logging built into ASP.NET Core</p>
+                    <p>Various logger built in<br/>
+                    <small>E.g. console, NLog</small></p>
+                    <p><a href="https://docs.asp.net/en/latest/fundamentals/logging.html" target="_blank">Details about logging</a></p>
+                    
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/90-aspnet-angular" target="_blank">Sample on GitHub</a></p>
+                </section>
+                         
+                <section>
+                    <h2>Dependency Injection</h2>
+
+                    <p>Support for DI built into ASP.NET Core<br/>
+                    <small><a href="https://docs.asp.net/en/latest/fundamentals/dependency-injection.html" target="_blank">Details about DI</a></small></p>
+                    <p>Framework-provided services and your own services</p>
+                    <p>Default container can be replaced<br/>
+                    <small><a href="https://docs.asp.net/en/latest/fundamentals/dependency-injection.html#replacing-the-default-services-container" target="_blank">Details</a></small></p>
+                        
+                    <pre><code class="hlcs" data-trim contenteditable>
+public void ConfigureServices(IServiceCollection services)
+{
+    ...
+    // My own service
+    services.AddSingleton(typeof(INameGenerator), typeof(NameGenerator));
+    ...
+    // Framework services
+    services.AddApplicationInsightsTelemetry(configuration);
+    services.AddCors();
+    services.AddMvc();
+    ...
+}
+                    </code></pre>
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/90-aspnet-angular" target="_blank">Sample on GitHub</a></p>
+                </section>
+                         
+                <section>
+                    <h2>DI Service Lifetime</h2>
+
+                    <ul>
+                        <li>Transient</li>
+                        <li>Scoped</li>
+                        <li>Singleton</li>
+                        <li>Instance</li>
+                    </ul>
+                        
+                    <pre><code class="hlcs" data-trim contenteditable>
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddSingleton&lt;MySingletonService&gt;();
+    services.AddTransient&lt;MyTransientService&gt;();
+    services.AddScoped&lt;MyScopedService&gt;();
+    
+    services.AddMvc();
+}
+                    </code></pre>
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/60-di-scopes/myApp" target="_blank">Sample on GitHub</a></p>
+                </section>
+
+                <section>
+                    <h2>ASP.NET Core Demo</h2>
+                    
+                    <p>Build end-to-end sample app with server and client components</p>
+                    
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/90-aspnet-angular" target="_blank">Sample on GitHub</a></p>
                 </section>
             </section>
 
             <section data-background="../img/basta-background.jpg">
                 <section data-background="../img/basta-title.jpg">
-                    <h2 style="margin-top: 300px;">Testing</h2>
+                    <h2 style="margin-top: 300px;">News in Visual Studio 2015 Update 1</h2>
+                </section>
+                
+                <section>
+                    <h2>C# Scripting</h2>
+                    
+                    <p><a href="https://github.com/dotnet/roslyn/wiki/Scripting-API-Samples" target="_blank">Roslyn Scripting API</a> for C#<br/>
+                    <small>Finally back ;-)</small></p>
+                    
+                    <pre><code class="hljson" data-trim contenteditable>
+{
+  "dependencies": {
+    ...
+    "Microsoft.CodeAnalysis.CSharp.Scripting": "1.1.1"
+  }, ...
+}
+                    </code></pre>
+                    
+                    <p><code>csi.exe</code> for running C# scripts in dev command prompt</p>
+                    <p>C# Interactive Windows in VS</p>
+                                        
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/65-csharp-scripting/myApp" target="_blank">Sample on GitHub</a></p>
+                </section>
+                
+                <section>
+                    <h2>Goto Implementation :-)</h2>
+                    
+                    <img src="../img/visual-studio-goto-implementation.png" />
                 </section>
             </section>
+
+            <section data-background="../img/basta-title.jpg">
+                <h2 style="margin-top: 300px;">Thank you for attending!</h2>
+                
+                <p>See you next BASTA!</p>
+            </section>            
         </div>
     </div>
 
