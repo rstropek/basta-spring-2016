@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -39,7 +39,7 @@
     <div class="reveal">
 
         <div class="slides">
-            <section data-background="../img/basta-title.jpg">
+            <section data-state="title">
                 <h2 style="margin-top: 300px;">C# Revolution</h2>
 
                 <p>Rainer Stropek | time cockpit</p>
@@ -52,7 +52,7 @@
                 <small>Samples see <a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop" target="_blank">GitHub</a></small>
             </section>
 
-            <section data-background="../img/basta-background.jpg">
+            <section data-state="content">
                 <h2>Agenda (German)</h2>
 
                 <small>
@@ -76,8 +76,8 @@
                 </small>
             </section>
 
-            <section data-background="../img/basta-background.jpg">
-                <section data-background="../img/basta-title.jpg">
+            <section data-state="content">
+                <section data-state="title">
                     <h2 style="margin-top: 300px;">Getting Started</h2>
                 </section>
                 
@@ -204,8 +204,8 @@
                 </section>
             </section>
             
-            <section data-background="../img/basta-background.jpg">
-                <section data-background="../img/basta-title.jpg">
+            <section data-state="content">
+                <section data-state="title">
                     <h2 style="margin-top: 300px;">Projects</h2>
                     <small><code>project.json</code></small>
                 </section>
@@ -490,8 +490,8 @@ public static void Main(string[] args)
                 </section>
             </section>
 
-            <section data-background="../img/basta-background.jpg">
-                <section data-background="../img/basta-title.jpg">
+            <section data-state="content">
+                <section data-state="title">
                     <h2 style="margin-top: 300px;">ASP.NET Fundamentals</h2>
                 </section>
                 
@@ -747,8 +747,8 @@ public void ConfigureServices(IServiceCollection services)
                 </section>
             </section>
 
-            <section data-background="../img/basta-background.jpg">
-                <section data-background="../img/basta-title.jpg">
+            <section data-state="content">
+                <section data-state="title">
                     <h2 style="margin-top: 300px;">News in Visual Studio 2015 Update 1</h2>
                 </section>
                 
@@ -780,13 +780,20 @@ public void ConfigureServices(IServiceCollection services)
                 </section>
             </section>
 
-            <section data-background="../img/basta-title.jpg">
+            <section data-state="title">
                 <h2 style="margin-top: 300px;">Thank you for attending!</h2>
                 
                 <p>See you next BASTA!</p>
             </section>            
         </div>
+
+		<div class="footer">
+			software architects gmbh<br />
+			<a href="http://www.software-architects.at" target="_blank">http://www.software-architects.at</a>
+		</div>
     </div>
+
+	
 
     <script src="../lib/js/head.min.js"></script>
     <script src="../js/reveal.js"></script>
