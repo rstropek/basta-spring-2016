@@ -347,18 +347,22 @@ body {
 /*********************************************
  * FOOTER
  *********************************************/
-
-aside.controls {
-	margin-bottom: 80px;
-	border-radius: 50%;
-	background-color: #eee;
+.footer {
+	position: absolute;
+	bottom: 20px;
+	left: 40px;
+	z-index: 1000;
+	font-size: 16px !important;
 }
 
+/*********************************************
+ * SLIDE BACKGROUNDS
+ *********************************************/
 div.slide-background.present, div.slide-background.past, div.slide-background.future {
 	transition: none;
 }
 
-html.content div.slide-background.present, html.content div.slide-background.past, html.content div.slide-background.future {
+html.content div.slide-background.stack, html.content div.slide-background.present, html.content div.slide-background.past, html.content div.slide-background.future {
 	background-image: url(../../img/basta-background-content-logo.png), url(../../img/basta-background-content.jpg);
 	background-position: right bottom, right bottom;
 	background-size: auto 80px , 100% 80px;
@@ -370,10 +374,17 @@ html.title div.slide-background.present, html.title div.slide-background.past, h
 	background-size: 100% 60%, auto 10%;
 }
 
-.footer {
-	position: absolute;
-	bottom: 20px;
-	left: 40px;
-	z-index: 1000;
-	font-size: 16px !important;
+div.overview div.slide-background {
+	background-image: url(../../img/basta-background-content-logo.png), url(../../img/basta-background-content.jpg)!important;
+	background-position: right bottom, right bottom!important;
+	background-size: auto 80px , 100% 80px!important;
+}
+
+/*********************************************
+ * NAVIGATION
+ *********************************************/
+aside.controls {
+	margin-bottom: 80px;
+	border-radius: 50%;
+	background-color: #eee;
 }
