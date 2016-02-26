@@ -1,0 +1,351 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>BASTA Spring 2016 - Git Introduction</title>
+
+    <meta name="description" content="Introduction to source control with Git">
+    <meta name="author" content="Rainer Stropek">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="../css/reveal.css">
+    <link rel="stylesheet" href="../css/theme/rainer.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../css/print/pdf.css' : '../css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+
+    <div class="reveal">
+
+        <div class="slides">
+            <section data-state="title">
+                <h2 style="margin-top: 300px;">Git Introduction</h2>
+
+                <p>Rainer Stropek | time cockpit</p>
+                <p>
+                    <a href="mailto:rainer@timecockpit.com">rainer@timecockpit.com</a> |
+                    <a href="http://www.software-architects.at">Blog</a> |
+                    <a href="https://github.com/rstropek">GitHub</a>
+                </p>
+
+                <small>Samples see <a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop" target="_blank">GitHub</a></small>
+            </section>
+
+            <section data-state="content">
+                <h2>Agenda (German)</h2>
+
+                <p>
+                    Wer Quellcode schreibt, muss ihn verwalten. Egal ob Dev oder Ops, professionelle Quellcodeverwaltung
+                    sollte heute in jedem Team vorhanden sein. Das Open-Source-Projekt Git wurde diesbezüglich in den
+                    letzten Jahren zu einem De-fakto-Standard. In der Session bietet Rainer Stropek einen
+                    Einstieg in Quellcodeverwaltung mit Git. Er erklärt das Funktionsprinzip, zeigt die wichtigsten
+                    Operationen und Workflows und stellt nützliche Tools vor.
+                </p>
+            </section>
+
+            <section data-state="content">
+                <section data-state="title">
+                    <h2 style="margin-top: 300px;">Getting Started</h2>
+                </section>
+
+                <section>
+                    <h2>What is <a href="https://git-scm.com/">Git</a>?</h2>
+
+                    <p>
+                        Source code management system<br />
+                        <small>Originally developed by Linux kernel developers</small>
+                    </p>
+
+                    <ul>
+                        <li>
+                            Distributed version control<br />
+                            <small>Different devs work on a project without sharing a common network</small>
+                        </li>
+                        <li>
+                            Every Git directory is a fully-fledged repository<br />
+                            <small>Includes complete history and full version-tracking, can be moved</small>
+                        </li>
+                        <li>
+                            Various <a href="https://en.wikipedia.org/wiki/Git_(software)#Git_server">Git server implementations</a> available<br />
+                            <small>
+                                E.g. <a href="https://github.com/">GitHub</a>,
+                                <a href="https://www.visualstudio.com/products/visual-studio-team-services-vs">Visual Studio Team Services</a>;
+                                public (often free) and private repsitories
+                            </small>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Important characteristics of Git</h2>
+
+                    <ul>
+                        <li>
+                            Support non-linear development<br />
+                            <small>Brances are very lightweight, branching and merging happens often</small>
+                        </li>
+                        <li>
+                            Distributed development<br />
+                            <small>Local copy of entire history</small>
+                        </li>
+                        <li>Publishing of repositories over various protocols</li>
+                        <li>Fast, even for large projects</li>
+                        <li>
+                            Cryptographic authentication of history<br />
+                            <small>ID of a particular commit depends upon the complete development history</small>
+                        </li>
+                        <li>Cross-platform</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Tools</h2>
+
+                    <ul>
+                        <li>
+                            <a href="https://git-scm.com/download/win">Git for Windows</a>,
+                            <a href="https://git-scm.com/download/linux">Linux</a> and
+                            <a href="https://git-scm.com/download/mac">Mac</a>
+                        </li>
+                        <li><a href="https://github.com/dahlbyk/posh-git">posh-git</a> (Git/PowerShell integration)</li>
+                        <li><a href="https://channel9.msdn.com/Events/Build/2015/3-746">Git in Visual Studio</a> (Video)</li>
+                        <li><a href="https://visualstudio.github.com/">GitHub Extension for Visual Studio</a></li>
+                        <li><a href="https://desktop.github.com/">GitHub Desktop</a></li>
+                        <li><a href="https://www.sourcetreeapp.com/">SourceTree</a></li>
+                        <li><a href="https://tortoisegit.org/">TortoiseGit</a> (Git in Windows Explorer)</li>
+                        <li><a href="https://gitextensions.github.io/">Git Extensions</a></li>
+                    </ul>
+
+                    <p>More complete list of <a href="https://git-scm.com/download/gui/linux">GUI clients</a>.</p>
+                </section>
+
+                <section>
+                    <h2>Documentation</h2>
+
+                    <p><code>git help <em>verb</em></code></p>
+
+                    <ul>
+                        <li><a href="https://git-scm.com/docs">Git Reference</a></li>
+                        <li><a href="https://git-scm.com/book/en/v2">Git Book</a></li>
+                        <li><a href="http://ndpsoftware.com/git-cheatsheet.html">Git Cheatsheet</a> (visual)</li>
+                        <li><a href="https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf">Git Cheatsheet</a> (print)</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section data-background="../img/basta-background.jpg">
+                <section data-background="../img/basta-title.jpg">
+                    <h2 style="margin-top: 300px;">Basic Operations</h2>
+                </section>
+
+                <section>
+                    <h2>Basic configuration</h2>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Get a list of config settings
+git config --list
+
+# Set identity
+git config --global user.name "Rainer Stropek"
+git config --global user.email rainer@timecockpit.com
+
+# Set editor
+git config --global core.editor "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -nosession"
+                    </code></pre>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-config">git config</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Getting Started</h2>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Initializing a Repository in an Existing Directory -> note .git directory
+git init
+
+# Create a file -> UNTRACKED
+echo Hello World > greet.txt
+
+# Check status of git repo after each step with 'git status' or 'git status -s'
+# Add the file to the repo -> STAGED
+git add greet.txt
+
+# Commit the changes -> UNMODIFIED
+git commit -m "Add greeting"
+
+# Change file -> MODIFIED, use 'git add' to save changes to repo
+echo ! >> greet.txt
+
+# Overwrite change with last version from repo -> UNMODIFIED
+git checkout -- greet.txt
+                    </code></pre>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-init">git init</a>,
+                            <a href="https://git-scm.com/docs/git-status">git status</a>,
+                            <a href="https://git-scm.com/docs/git-add">git add</a>,
+                            <a href="https://git-scm.com/docs/git-commit">git commit</a>,
+                            <a href="https://git-scm.com/docs/git-checkout">git checkout</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Tips for adding changes</h2>
+
+                    <ul>
+                        <li>Use fileglobs (e.g. <code>*.cs</code>) for multiple files</li>
+                        <li>Use directory names</li>
+                        <li><code>--dry-run</code> to see what <em>would</em> happen</li>
+                        <li>Use <code>git diff</code> to see changes not yet staged</li>
+                        <li>Use <code>git diff --staged</code> to see changes for next commit</li>
+                        <li>Use <code>.gitattributes</code> file to customize text/binary detection</li>
+                        <li>Use <code>git difftool</code> to change diff tool<br/>
+                            <small>In practice, use a tool like VS for diffing</small></li>
+                    </ul>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-add">git add</a>,
+                            <a href="https://git-scm.com/docs/git-diff">git diff</a>,
+                            <a href="https://git-scm.com/docs/git-difftool">git difftool</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Ignoring files with <code>.gitignore</code></h2>
+
+                    <ul>
+                        <li>Comments: <code># Nuget Packages</code></li>
+                        <li>File or directory names: <code>packages</code></li>
+                        <li>Patterns: <code>[Bb]in</code>, <code>[Tt]est[Rr]esult*</code></li>
+                        <li>Wildcards: <code>*fakes*</code></li>
+                        <li>Comments: <code># Nuget Packages</code></li>
+                        <li>Exceptions: <code>!Gruntfile.js</code></li>
+                    </ul>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+*.js
+![Gg]runtfile.js
+                    </code></pre>
+
+                    <p>Try this example in command line and VS</p>
+                </section>
+
+                <section>
+                    <h2>Removing files</h2>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Create two additional files and commit them
+
+# Remove file
+git rm file1.txt
+git status
+git commit -m "Delete file"
+
+# Create addittional file and stage it
+echo Hello > file3.txt
+git add file3.txt
+git status
+
+# Remove file from staging area -> UNTRACKED
+git rm --cached file3.txt
+                    </code></pre>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-rm">git rm</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Getting an existing repository</h2>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Start in an empty directory
+# Get existing code from GitHub
+git clone 
+                        </code></pre>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-init">git init</a>,
+                            <a href="https://git-scm.com/docs/git-status">git status</a>,
+                            <a href="https://git-scm.com/docs/git-add">git add</a>,
+                            <a href="https://git-scm.com/docs/git-commit">git commit</a>
+                        </small>
+                    </p>
+                </section>
+            </section>
+        </div>
+
+        <div class="footer">
+            BASTA Spring 2016<br />
+            Rainer Stropek | <a href="http://www.software-architects.at">software architects</a>
+        </div>
+    </div>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../lib/js/head.min.js"></script>
+    <script src="../js/reveal.js"></script>
+    <script src="../js/util.js"></script>
+
+    <script>
+        // Full list of configuration options available at:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            margin: 0.1,
+
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+            // Optional reveal.js plugins
+            dependencies: [
+                { src: '../lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '../plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '../plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '../plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '../plugin/zoom-js/zoom.js', async: true },
+                { src: '../plugin/notes/notes.js', async: true }
+            ]
+        });
+
+        Reveal.configure({
+            slideNumber: true
+        })
+    </script>
+
+</body>
+
+</html>
