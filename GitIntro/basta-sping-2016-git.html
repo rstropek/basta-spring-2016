@@ -178,11 +178,15 @@ git config --global core.editor "'C:/Program Files (x86)/Notepad++/notepad++.exe
 
 # Set alias for git commands
 git config --global alias.unstage 'reset HEAD --'
+
+# Cache password in memory for 15 minutes
+git config --global credential.helper cache
                     </code></pre>
 
                     <p>
                         <small>
-                            <a href="https://git-scm.com/docs/git-config">git config</a>
+                            <a href="https://git-scm.com/docs/git-config">git config</a><br/>
+                            <a href="https://git-scm.com/book/be/v2/Git-Tools-Credential-Storage">Details about Credential Storage</a>
                         </small>
                     </p>
                 </section>
@@ -619,7 +623,58 @@ git status
 # Look in file.txt and resolve conflict
                     </code></pre>
                 </section>
+
+                <section>
+                    <h2>Remote Branches</h2>
+
+                    <ul>
+                        <li>Local branches are not synchronized to remotes</li>
+                        <li>Use <code>git push &lt;remote-name&gt; &lt;branche-name&gt;</code> to push a branch</li>
+                        <li>Tracked branches: Local branches with a related remote branch<br/>
+                            <small>E.g. <code>origin/master</code> after <code>git clone</code></small></li>
+                        <li>Get list of tracked branches with <code>git branch -vv</code></li>
+                        <li>Delete server branch with <code>git push origin --delete &lt;branch-name&gt;</code></li>
+                    </ul>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-push">git push</a>,
+                            <a href="https://git-scm.com/docs/git-clone">git clone</a>,
+                            <a href="https://git-scm.com/docs/git-branch">git branch</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Rebase Basics</h2>
+
+                    <p>Demo using <a href="http://pcottle.github.io/learnGitBranching/?NODEMO">Learn Git Branching</a></p>
+
+                    <img src="../img/git-rebase-sample.png" />
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/book/en/v1/Git-Branching-Rebasing">Details about rebasing</a>
+                        </small>
+                    </p>        
+                </section>
+
+                <section>
+                    <h2>Demos</h2>
+
+                    <ul>
+                        <li><a href="https://pages.github.com/">GitHub Pages</a>: Work with <code>gh-pages</code> branch</li>
+                        <li>Working with branches in Visual Studio 2015</li>
+                        <li><a href="https://msdn.microsoft.com/en-us/library/vs/alm/code/git/pull-requests">Creating a pull request with VSTS</a></li>
+                    </ul>
+                </section>
             </section>
+
+            <section data-state="title">
+                <h2 style="margin-top: 300px;">Thank you for attending!</h2>
+
+                <p>See you next BASTA!</p>
+            </section>     
         </div>
 
         <div class="footer">
