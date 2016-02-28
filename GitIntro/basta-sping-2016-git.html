@@ -123,6 +123,9 @@
                     <h2>Tools</h2>
 
                     <ul>
+                        <li>GUI tools installed with Git<br/>
+                            <a href="https://git-scm.com/docs/gitk">gitk</a> (view history) and 
+                            <a href="https://git-scm.com/docs/git-gui">git gui</a> (build commit)</li>
                         <li>
                             <a href="https://git-scm.com/download/win">Git for Windows</a>,
                             <a href="https://git-scm.com/download/linux">Linux</a> and
@@ -154,8 +157,8 @@
                 </section>
             </section>
 
-            <section data-background="../img/basta-background.jpg">
-                <section data-background="../img/basta-title.jpg">
+            <section data-state="content">
+                <section data-state="title">
                     <h2 style="margin-top: 300px;">Basic Operations</h2>
                 </section>
 
@@ -172,6 +175,9 @@ git config --global user.email rainer@timecockpit.com
 
 # Set editor
 git config --global core.editor "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -nosession"
+
+# Set alias for git commands
+git config --global alias.unstage 'reset HEAD --'
                     </code></pre>
 
                     <p>
@@ -287,22 +293,331 @@ git rm --cached file3.txt
                 </section>
 
                 <section>
+                    <h2>Moving files</h2>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Rename greet.txt to else.txt -> STAGED
+git mv greet.txt else.txt
+git add .
+git commit -m "Rename"
+git status
+
+# Manual process. Note that this results in a STAGED rename, too
+mv else.txt greet.txt
+git rm else.txt
+git add greet.txt
+git status
+git add .
+git commit -m "Rename"
+                    </code></pre>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-mv">git mv</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Inspect commit history</h2>
+
+                    <ul>
+                        <li><code>git log -2</code> to view the last two commits (desc)<br/>
+                            <small>Note sha1 hash of commits</small></li>
+                        <li><code>-p</code> switch shows differences</li>
+                        <li><code>-p</code> switch shows differences, <code>--stat</code> summary statistics</li>
+                        <li><code>--pretty</code> controls output (e.g. <code>--pretty=oneline</code>)</li>
+                    </ul>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Get log history and select a specific commit hash
+git log -5
+
+# Get specific commit (replace hash with your value!)
+git checkout a0bd8
+
+# Back to last commit
+git checkout master
+                    </code></pre>
+                                        
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-log">git log</a><br/>
+                            <a href="https://git-scm.com/docs/gitrevisions">How to specify revisions and ranges</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Undoing</h2>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Create a new repo
+git init
+echo Hello World > greet.txt
+echo Hello World 2 > greet2.txt
+git add .
+git commit -m "Initial"
+
+echo ! >> greet.txt
+git add .
+
+# Add additional change to previous commit
+git commit --amend
+git log -p
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Undoing</h2>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Create a new repo, create a file and change it three times
+git init
+echo . > demo.txt; git add demo.txt; git commit -m "Change 1";
+echo . >> demo.txt; git add demo.txt; git commit -m "Change 2";
+echo . >> demo.txt; git add demo.txt; git commit -m "Change 3";
+git log --oneline --decorate
+
+# Soft reset -> undo COMMIT
+git reset --soft HEAD~
+git log --oneline --decorate
+type demo.txt
+git status
+
+# Now try the same with --mixed (default) -> undo COMMIT and ADD
+# Now try the same with --hard -> undo COMMIT, ADD and local change
+                    </code></pre>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-reset">git reset</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Inspect commit history</h2>
+
+                    <ul>
+                        <li><code>git log -2</code> to view the last two commits (desc)</li>
+                        <li><code>--since=[...]</code> to view commits in a specific time period</li>
+                        <li><code>-p</code> switch shows differences</li>
+                        <li><code>-p</code> switch shows differences, <code>--stat</code> summary statistics</li>
+                        <li><code>--pretty=[...]</code> controls output (e.g. <code>--pretty=oneline</code>)</li>
+                    </ul>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-log">git log</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Tagging</h2>
+
+                    <p>
+                        Lightweight (just pointer to a commit) and annotated<br />
+                        <small><code>-a</code> argument for <a href="https://git-scm.com/docs/git-tag">git tag</a></small>
+                    </p>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Open a repo that has some commits
+# Create an annotated tag
+git tag -a v1.0 -m "This is our initial release"
+
+# Inspect tags
+git tag
+git tag -l "v1.*"
+git show v1.0
+
+# Create a tag for a previous commit (replace with your own commit hash)
+git tag -a v0.9 -m "This was beta 1" a0b9f
+git tag
+
+# Get specific version
+git checkout v0.9
+                    </code></pre>
+
+                    <p>
+                        Tags are not automatically shared, need to explicitly push them<br/>
+                        <small>Details about pushing changes see later</small>
+                    </p>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-tag">git tag</a><br />
+                            <a href="https://git-scm.com/docs/gitrevisions">How to specify revisions and ranges</a>
+                        </small>
+                    </p>
+
+                </section>
+            </section>
+
+            <section data-state="content">
+                <section data-state="title">
+                    <h2 style="margin-top: 300px;">Remote Repositories</h2>
+                </section>
+
+                <section>
+                    <h2>What are remote repositories?</h2>
+
+                    <p>
+                        Git repositories stored on servers<br />
+                        <small>E.g. GitHub, Visual Studio Team Services, Microsoft Azure App Services</small>
+                    </p>
+                </section>
+
+                <section>
                     <h2>Getting an existing repository</h2>
 
                     <pre><code class="hlps" data-trim contenteditable>
 # Start in an empty directory
 # Get existing code from GitHub
-git clone 
-                        </code></pre>
+git clone https://github.com/rstropek/Samples.git
+cd Samples
+
+# View remotes
+git remote -v
+                    </code></pre>
+
+                    <img src="../img/github-repo-url.png" />
 
                     <p>
                         <small>
-                            <a href="https://git-scm.com/docs/git-init">git init</a>,
-                            <a href="https://git-scm.com/docs/git-status">git status</a>,
-                            <a href="https://git-scm.com/docs/git-add">git add</a>,
-                            <a href="https://git-scm.com/docs/git-commit">git commit</a>
+                            <a href="https://git-scm.com/docs/git-clone">git clone</a>,
+                            <a href="https://git-scm.com/docs/git-remote">git remote</a>
                         </small>
                     </p>
+                </section>
+
+                <section>
+                    <h2>Managing Remotes</h2>
+
+                    <p>Demo: <a href="https://azure.microsoft.com/en-us/documentation/articles/web-sites-publish-source-control/">
+                        Azure App Services Git integration</a></p>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Create new local repo and commit some changes (e.g. static HTML files)
+# Add a remote
+git remote add azure &lt;path_to_azure_git&gt;
+git remote -v
+git remote show azure
+
+# Push changes
+git push azure master
+                    </code></pre>
+
+                    <img src="../img/azure-portal-app-services-git.png" style="max-height: 250px;"/>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-remote">git remote</a>,
+                            <a href="https://git-scm.com/docs/git-push">git push</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Managing Content</h2>
+
+                    <ul>
+                        <li>Use <code><a href="https://git-scm.com/docs/git-fetch">git fetch</a></code> to fetch all changes into local repo<br/>
+                            <small>Does not merge changes into your working directory</small>.</li>
+                        <li>
+                            Use <code><a href="https://git-scm.com/docs/git-pull">git pull</a></code> to fetch and merge.
+                        </li>
+                        <li>
+                            Use <code><a href="https://git-scm.com/docs/git-push">git push</a></code> to push your changes to remote repo<br />
+                            <small>See example on previous page</small>
+                        </li>
+                    </ul>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-fetch">git fetch</a>,
+                            <a href="https://git-scm.com/docs/git-merge">git merge</a>,
+                            <a href="https://git-scm.com/docs/git-push">git push</a>
+                        </small>
+                    </p>
+                </section>            
+
+                <section>
+                    <h2>Pushing Tags</h2>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Create remote repo (e.g. on GitHub) and push some changes
+# Create a tag
+git tag -a v1.0
+
+# Push tag (use 'git push origin --tags' to push mulitple tags in one statement)
+git push origin v1.0
+
+# View tags in remote repo (e.g. on GitHub)
+                    </code></pre>
+
+                    <p>
+                        <small>
+                            <a href="https://git-scm.com/docs/git-tag">git tag</a>,
+                            <a href="https://git-scm.com/docs/git-push">git push</a>
+                        </small>
+                    </p>
+                </section>
+            </section>
+
+            <section data-state="content">
+                <section data-state="title">
+                    <h2 style="margin-top: 300px;">Branching and Merging</h2>
+                </section>
+
+                <section>
+                    <h2>Branching Basics</h2>
+
+                    <p>Demo using <a href="http://pcottle.github.io/learnGitBranching/?NODEMO">Learn Git Branching</a></p>
+
+                    <ul>
+                        <li>Commit some changes (<code><a href="https://git-scm.com/docs/git-commit">git commit</a></code>)</li>
+                        <li>Create a feature branch (<code><a href="https://git-scm.com/docs/git-branch">git branch</a></code>)<br/>
+                            <small>Note that we are still on master</small></li>
+                        <li>Switch to feature branch (<code><a href="https://git-scm.com/docs/git-checkout">git checkout</a></code>)</li>
+                        <li>Commit some changes (<code><a href="https://git-scm.com/docs/git-commit">git commit</a></code>)</li>
+                        <li>Switch to master branch (<code><a href="https://git-scm.com/docs/git-checkout">git checkout</a></code>)</li>
+                        <li>Create a hotfix branch and checkout (<code><a href="https://git-scm.com/docs/git-checkout">git checkout -b</a></code>)<br />
+                            <small>Note that we are now on hotfix</small></li>
+                        <li>Commit some changes (<code><a href="https://git-scm.com/docs/git-commit">git commit</a></code>)</li>
+                        <li>Switch to master branch (<code><a href="https://git-scm.com/docs/git-checkout">git checkout</a></code>)</li>
+                        <li>Merge changes from hotfix (<code><a href="https://git-scm.com/docs/git-merge">git merge</a></code>)<br/>
+                            <small>Note 'fast forward'</small></li>
+                        <li>Merge changes from feature (<code><a href="https://git-scm.com/docs/git-merge">git merge</a></code>)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Branching Merging</h2>
+
+                    <pre><code class="hlps" data-trim contenteditable>
+# Create file.txt with two lines
+git add .
+git commit -m "Initial"
+
+# Create feature branch
+git checkout -b feature
+# Change first line in file.txt and commit
+                             
+# Create feature branch
+git checkout master
+git checkout -b hotfix
+# Change second line in file.txt and commit
+
+# Merge with both branches -> results in conflict
+git checkout master
+git merge hotfix
+git merge feature
+git status
+
+# Look in file.txt and resolve conflict
+                    </code></pre>
                 </section>
             </section>
         </div>
