@@ -89,19 +89,19 @@
 
                     <p>Different implementations</p>
                     <ul>
-                        <li>
+                        <li class="fragment">
                             <p>.NET Core<br/>
                             <small>New, redesigned, cross-platform, open-source, ...</small></p>
                         </li>
-                        <li>
+                        <li class="fragment">
                             <p>.NET Native<br/>
                             <small>.NET adhead-of-time compiled</small></p>
                         </li>
-                        <li>
+                        <li class="fragment">
                             <p>.NET Framework<br/>
                             <small>Server, client, just Windows; huge .NET Framework Class Library incl. WCF, WPF, etc.</small></p>
                         </li>
-                        <li>
+                        <li class="fragment">
                             <p>Mono<br/>
                             <small>Community-driven, cross-platform, open-source; follows .NET Framework, not .NET Core</small></p>
                         </li>
@@ -111,15 +111,17 @@
                 <section>
                     <h2>What is <i>.NET Core?</i></h2>
                     
-                    <p>.NET Runtime and framework<br/>
+                    <p class="fragment">Contender: <a href="https://nodejs.org/en/">Node.js</a></p>
+
+                    <p class="fragment">.NET Runtime and framework<br/>
                         <small><a href="https://github.com/dotnet/coreclr/blob/master/Documentation/project-docs/dotnet-standards.md">ECMA 335</a> implementation</small>
                     </p>
-                    <p>Cross-platform<br/>
+                    <p class="fragment">Cross-platform<br/>
                         <small>Windows, Linux and MacOS</small>
                     </p>
-                    <p>Open-source</p>
-                    <p>Delivered by package manager (NuGet, APT, etc.) or Docker</p>
-                    <p>"A-la-carte" framework (take just what you need)</p>
+                    <p class="fragment">Open-source</p>
+                    <p class="fragment">Delivered by package manager (NuGet, APT, etc.) or Docker</p>
+                    <p class="fragment">"A-la-carte" framework (take just what you need)</p>
                 </section>
 
                 <section>
@@ -603,7 +605,7 @@ public void Configure(IApplicationBuilder app)
                         <li>Connect to VM in Azure with PuTTY</li>
                         <li>Copy sample to VM with FileZilla</li>
                         <li>Get <a href="https://hub.docker.com/r/microsoft/aspnet/">ASP.NET Docker Image</a></li>
-                        <li>Start Docker container</br/>
+                        <li>Start Docker container<br/>
                         <small><code>docker run -it -v ~/myApp:/src -p 80:5000 microsoft/aspnet /bin/bash</code></small></li>
                         <li>Start web app and show it in browser</li> 
                     </ul>
@@ -749,42 +751,158 @@ public void ConfigureServices(IServiceCollection services)
 
             <section data-state="content">
                 <section data-state="title">
-                    <h2 style="margin-top: 300px;">News in Visual Studio 2015 Update 1</h2>
+                    <h2 style="margin-top: 300px;">Unit Testing</h2>
                 </section>
-                
+
                 <section>
-                    <h2>C# Scripting</h2>
-                    
-                    <p><a href="https://github.com/dotnet/roslyn/wiki/Scripting-API-Samples">Roslyn Scripting API</a> for C#<br/>
-                    <small>Finally back ;-)</small></p>
-                    
-                    <pre><code class="hljson" data-trim contenteditable>
+                    <h2>Test Frameworks and Runners</h2>
+
+                    <p>DNX supports/will support multiple test frameworks</p>
+
+                    <p>Current, <a href="https://xunit.github.io/">XUnit</a> is preferred</p>
+
+                    <p>Used to MSTest but new to XUnit? <a href="https://xunit.github.io/docs/comparisons.html">Compare ...</a></p>
+                </section>
+
+                <section>
+                    <h2>Project Setup</h2>
+
+                    <p>Create <code>global.json</code> referencing projects</p>
+
+                    <pre><code class="hljs" data-trim contenteditable>
 {
-  "dependencies": {
-    ...
-    "Microsoft.CodeAnalysis.CSharp.Scripting": "1.1.1"
-  }, ...
+    "projects":[
+        "src/client",
+        "src/math-library",
+        "test/lib-test"
+    ]
 }
                     </code></pre>
-                    
-                    <p><code>csi.exe</code> for running C# scripts in dev command prompt</p>
-                    <p>C# Interactive Windows in VS</p>
-                                        
-                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/65-csharp-scripting/myApp">Sample on GitHub</a></p>
+
+                    <img src="../img/test-project-structure.png" style="max-height: 250px;" />
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/70-xunit">Sample on GitHub</a></p>
                 </section>
-                
+
+                <section>
+                    <h2>Writing tests</h2>
+
+                    <p><code>project.json</code></p>
+
+                    <pre><code class="hljs" data-trim contenteditable>
+{
+    "dependencies": {
+        "xunit": "2.1.0",
+        "xunit.runner.dnx": "2.1.0-rc1-build204",
+        "math-library": ""
+    },
+    "frameworks": {
+        "dnxcore50": {}
+    },
+    "commands": {
+        "test": "xunit.runner.dnx"
+    }
+}
+                    </code></pre>
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/70-xunit">Sample on GitHub</a></p>
+                </section>
+
+                <section>
+                    <h2>Writing tests</h2>
+
+                    <pre><code class="hlcs" data-trim contenteditable>
+using Xunit;
+namespace Tests
+{
+    public class TestClass
+    {
+        [Fact]
+        public void TestAdd()
+        {
+            Assert.Equal(2, Library.Math.Add(1, 1));
+        }
+        ...
+    }
+}
+                    </code></pre>
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/70-xunit">Sample on GitHub</a></p>
+                </section>
+
+                <section>
+                    <h2>Running tests</h2>
+
+                    <p><code>dnx test</code></p>
+
+                    <img src="../img/test-result.png" />
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/70-xunit">Sample on GitHub</a></p>
+                </section>
+            </section>
+
+            <section data-state="content">
+                <section data-state="title">
+                    <h2 style="margin-top: 300px;">News in Visual Studio 2015 Update 1</h2>
+                </section>
+
                 <section>
                     <h2>Goto Implementation :-)</h2>
-                    
+
                     <img src="../img/visual-studio-goto-implementation.png" />
+                </section>
+
+                <section>
+                    <h2>C# Scripting</h2>
+
+                    <p>
+                        <a href="https://github.com/dotnet/roslyn/wiki/Scripting-API-Samples">Roslyn Scripting API</a> for C#<br />
+                        <small>Finally back ;-)</small>
+                    </p>
+
+                    <pre><code class="hljson" data-trim contenteditable>
+{
+"dependencies": {
+...
+"Microsoft.CodeAnalysis.CSharp.Scripting": "1.1.1"
+}, ...
+}
+                </code></pre>
+
+                    <p><code>csi.exe</code> for running C# scripts in dev command prompt</p>
+                    <p>C# Interactive Windows in VS</p>
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/65-csharp-scripting/myApp">Sample on GitHub</a></p>
+                </section>
+
+                <section>
+                    <h2>Parallel Test Execution</h2>
+
+                    <p>
+                        VS2015 Update 1 can run tests in parallel on multi-core<br />
+                        <small>Must be separate assemblies, distinct processes</small>
+                    </p>
+
+                    <img src="../img/visual-studio-testsettings.png" />
+
+                    <pre><code class="hljson" data-trim contenteditable>
+&lt;?xml version='1.0' encoding='utf-8'?&gt;
+&lt;RunSettings&gt;
+&lt;RunConfiguration&gt;
+&lt;MaxCpuCount&gt;8&lt;/MaxCpuCount&gt;
+&lt;/RunConfiguration&gt;
+&lt;/RunSettings&gt;
+                </code></pre>
+
+                    <p><a href="https://github.com/rstropek/Samples/tree/master/ParallelTestExecution">Sample on GitHub</a></p>
                 </section>
             </section>
 
             <section data-state="title">
                 <h2 style="margin-top: 300px;">Thank you for attending!</h2>
-                
+
                 <p>See you next BASTA!</p>
-            </section>            
+            </section>
         </div>
 
 		<div class="footer">
