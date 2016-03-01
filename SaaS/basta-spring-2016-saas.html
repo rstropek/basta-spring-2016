@@ -1,0 +1,565 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>BASTA Spring 2016 - SaaS Rebirth</title>
+
+    <meta name="description" content="How the change to SaaS influences all areas of software development companies">
+    <meta name="author" content="Rainer Stropek">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="../css/reveal.css">
+    <link rel="stylesheet" href="../css/theme/rainer.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../css/print/pdf.css' : '../css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+    <style>
+        rect.external {
+            fill: #0000ff;
+            opacity: 0.75;
+        }
+
+        rect.internal {
+            fill: #008000;
+            opacity: 0.75;
+        }
+
+        .svgText {
+            font-size: 30px;
+            font-family: 'Segoe UI Historic';
+            fill: #ffffff;
+        }
+
+        .centerText {
+            text-align: center;
+            text-anchor: middle;
+        }
+
+        .fragment.svg:not(.visible) {
+            opacity: 0.25 !important;
+            visibility: visible !important;
+        }
+
+        path.arrow {
+            fill: #800000;
+            fill-opacity: 0.65870307;
+            stroke: #3c0000;
+            stroke-width: 1px;
+        }
+
+        span.highlight {
+            color: #008000;
+        }
+
+        path.resources {
+            fill: none;
+            stroke: #3a367a;
+            stroke-width: 2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="reveal">
+
+        <div class="slides">
+            <section data-state="title">
+                <h2 style="margin-top: 300px;">SaaS Rebirth</h2>
+
+                <p>Rainer Stropek | <a href="http://www.timecockpit.com">time cockpit</a></p>
+                <p>
+                    <a href="mailto:rainer@timecockpit.com">rainer@timecockpit.com</a> |
+                    <a href="http://www.software-architects.at">Blog</a> |
+                    <a href="https://github.com/rstropek">GitHub</a>
+                </p>
+            </section>
+
+            <section data-state="content">
+                <h2>Agenda (German)</h2>
+
+                <p>
+                    Um erfolgreich von Lizenzvertrieb zu SaaS zu wechseln, reicht es nicht, ein paar VMs in der Cloud zu mieten
+                    und die eigene Software dort zu installieren. SaaS beeinflusst das Softwareunternehmen als Ganzes. Es ist ein
+                    Kulturwandel, der alle Prozesse ver&#228;ndert und neue Strukturen verlangt. In seinem Vortrag spricht
+                    Rainer Stropek, langj&#228;hriger Azure MVP und MS Regional Director, &#252;ber die aus seiner Erfahrung wichtigsten
+                    Transformationsschritte, die Softwareanbieter beim Schritt in Richtung SaaS und Cloud beachten m&#252;ssen.
+                    Die Softwareentwicklung spielt dabei nat&#252;rlich eine wichtige Rolle. Seine Betrachtung geht jedoch
+                    dar&#252;ber hinaus.
+                </p>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <section>
+                    <h2>Business Model</h2>
+
+                    <svg width="1024" height="768">
+                        <g transform="translate(-60, -400)">
+                            <g class="fragment svg">
+                                <g>
+                                    <rect width="684.62732" height="86.96357" class="external" x="66.076904" y="409.06061" />
+                                    <text x="315.66385" y="460.05704">
+                                        <tspan x="315.66385" y="460.05704" class="svgText">Customer Segments</tspan>
+                                    </text>
+                                    <image y="427.08755" x="109.43661" height="59" width="60" xlink:href="../img/customer-segments-logo.png" />
+                                </g>
+                                <g>
+                                    <rect y="502.7226" x="66.076904" height="86.96357" width="338.14844" class="external" />
+                                    <text y="558.63977" x="249.46667">
+                                        <tspan y="558.63977" x="249.46667" class="svgText">CRM</tspan>
+                                    </text>
+                                    <image y="522.13684" x="112.02815" height="52" width="52" xlink:href="../img/crm-logo.png" />
+                                </g>
+                                <g>
+                                    <rect width="338.14844" height="86.96357" x="412.55579" y="502.7226" class="external" />
+                                    <text x="557.91736" y="559.06458">
+                                        <tspan x="557.91736" y="559.06458" class="svgText">Channels</tspan>
+                                    </text>
+                                    <image y="518.13684" x="447.46478" height="60" width="60" xlink:href="../img/channels-logo.png" />
+                                </g>
+                                <g>
+                                    <rect width="684.62732" height="86.96357" x="66.076904" y="596.38464" class="external" />
+                                    <text y="649.01477" x="332.56525">
+                                        <tspan y="649.01477" x="332.56525" class="svgText">Value Proposition</tspan>
+                                    </text>
+                                    <image y="610.00305" x="110.25349" height="65" width="64" xlink:href="../img/value-proposition-logo.png" />
+                                </g>
+                                <g>
+                                    <rect width="190.26111" height="224.99173" x="757.62622" y="409.06067" class="external" />
+                                    <text y="568.73309" x="851.05005">
+                                        <tspan y="568.73309" x="851.05005" class="svgText centerText">Revenue</tspan>
+                                        <tspan y="606.23309" x="851.05005" class="svgText centerText">Stream</tspan>
+                                    </text>
+                                    <image y="441.48895" x="780.67609" height="64" width="64" xlink:href="../img/revenue-structure-logo.png" />
+                                </g>
+                            </g>
+                            <g class="fragment svg">
+                                <g>
+                                    <rect width="338.14844" height="86.96357" x="66.076904" y="690.04651" class="internal" />
+                                    <text x="207.21313" y="742.97107">
+                                        <tspan x="207.21313" y="742.97107" class="svgText">Resources</tspan>
+                                    </text>
+                                    <image y="703.14392" x="104.97885" height="67" width="83" xlink:href="../img/resources-logo.png" />
+                                </g>
+                                <g>
+                                    <rect y="690.04651" x="412.55579" height="86.96357" width="338.14844" class="internal" />
+                                    <text y="743.4325" x="556.50891">
+                                        <tspan y="743.4325" x="556.50891" class="svgText">Activities</tspan>
+                                    </text>
+                                    <image y="700.14392" x="444.96481" height="65" width="65" xlink:href="../img/activities-logo.png" />
+                                </g>
+                                <g>
+                                    <rect width="684.62732" height="86.96357" x="66.076904" y="783.70856" class="internal" />
+                                    <text y="837.74719" x="407.21313">
+                                        <tspan y="837.74719" x="407.21313" class="svgText">Partners</tspan>
+                                    </text>
+                                    <image y="792.17206" x="104.97885" height="78" width="78" xlink:href="../img/partners-logo.png" />
+                                </g>
+                                <g>
+                                    <rect y="642.86346" x="757.62622" height="227.80864" width="190.26111" class="internal" />
+                                    <text x="848.23315" y="796.9021">
+                                        <tspan x="848.23315" y="796.9021" class="svgText centerText">Cost</tspan>
+                                        <tspan x="848.23315" y="834.4021" class="svgText centerText">Structure</tspan>
+                                    </text>
+                                    <image y="668.47485" x="776.67609" height="72" width="72" xlink:href="../img/cost-structure-logo.png" />
+                                </g>
+                            </g>
+                            <g class="fragment">
+                                <path d="m 413.38028,665.74247 111.26761,90.14084 -54.92958,0 0,92.95776 -109.85915,-1.40845 0,-88.7324 -56.33803,0 z"
+                                      class="arrow" />
+                            </g>
+                            <g class="fragment">
+                                <path d="m 704.22535,645.31995 90.14084,-111.26761 0,54.92958 92.95775,0 -1.40845,109.85915 -88.7324,0 0,56.33803 z"
+                                      class="arrow" />
+                            </g>
+                            <g class="fragment">
+                                <path d="m 413.38028,612.07869 111.26761,-90.14084 -54.92958,0 0,-92.95776 -109.85915,1.40845 0,88.7324 -56.33803,0 z"
+                                      class="arrow" />
+                            </g>
+                        </g>
+                    </svg>
+                </section>
+
+                <section>
+                    <h2>Business Model - External</h2>
+
+                    <p class="fragment">Which <span class="highlight">customers</span> do you serve?</p>
+                    <p class="fragment">What is the <span class="highlight">value</span> that you deliver to your customers?</p>
+                    <p class="fragment">Which <span class="highlight">communication, distribution, and sales channels</span> do you use?</p>
+                    <p class="fragment">How do you establish and maintain the <span class="highlight">relationship</span> with your customer?</p>
+                    <p class="fragment">How does your value proposition result in <span class="highlight">revenue</span>?</p>
+                </section>
+
+                <section>
+                    <h2>Business Model - Internal</h2>
+
+                    <p class="fragment">What are the <span class="highlight">key resources</span> that you need?</p>
+                    <p class="fragment">What are the <span class="highlight">key activities</span> you have to perform?</p>
+                    <p class="fragment">Which activities do you <span class="highlight">acquire from outside</span>?</p>
+                    <p class="fragment">How does your <span class="highlight">cost structure</span> look like?</p>
+                </section>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <section>
+                    <h2>SaaS Influence</h2>
+
+                    <svg width="1024" height="768">
+                        <g transform="translate(-60, -400)">
+                            <g class="fragment svg">
+                                <g>
+                                    <rect width="338.14844" height="86.96357" x="66.076904" y="690.04651" class="internal" />
+                                    <text x="207.21313" y="742.97107">
+                                        <tspan x="207.21313" y="742.97107" class="svgText">Resources</tspan>
+                                    </text>
+                                    <image y="703.14392" x="104.97885" height="67" width="83" xlink:href="../img/resources-logo.png" />
+                                </g>
+                                <g>
+                                    <rect width="684.62732" height="86.96357" x="66.076904" y="783.70856" class="internal" />
+                                    <text y="837.74719" x="407.21313">
+                                        <tspan y="837.74719" x="407.21313" class="svgText">Partners</tspan>
+                                    </text>
+                                    <image y="792.17206" x="104.97885" height="78" width="78" xlink:href="../img/partners-logo.png" />
+                                </g>
+                            </g>
+                            <g class="fragment svg">
+                                <rect y="690.04651" x="412.55579" height="86.96357" width="338.14844" class="internal" />
+                                <text y="743.4325" x="556.50891">
+                                    <tspan y="743.4325" x="556.50891" class="svgText">Activities</tspan>
+                                </text>
+                                <image y="700.14392" x="444.96481" height="65" width="65" xlink:href="../img/activities-logo.png" />
+                            </g>
+                            <g class="fragment svg">
+                                <rect y="642.86346" x="757.62622" height="227.80864" width="190.26111" class="internal" />
+                                <text x="848.23315" y="796.9021">
+                                    <tspan x="848.23315" y="796.9021" class="svgText centerText">Cost</tspan>
+                                    <tspan x="848.23315" y="834.4021" class="svgText centerText">Structure</tspan>
+                                </text>
+                                <image y="668.47485" x="776.67609" height="72" width="72" xlink:href="../img/cost-structure-logo.png" />
+                            </g>
+                            <g class="fragment svg">
+                                <rect width="684.62732" height="86.96357" x="66.076904" y="596.38464" class="external" />
+                                <text y="649.01477" x="332.56525">
+                                    <tspan y="649.01477" x="332.56525" class="svgText">Value Proposition</tspan>
+                                </text>
+                                <image y="610.00305" x="110.25349" height="65" width="64" xlink:href="../img/value-proposition-logo.png" />
+                            </g>
+                            <g class="fragment svg">
+                                <rect width="190.26111" height="224.99173" x="757.62622" y="409.06067" class="external" />
+                                <text y="568.73309" x="851.05005">
+                                    <tspan y="568.73309" x="851.05005" class="svgText centerText">Revenue</tspan>
+                                    <tspan y="606.23309" x="851.05005" class="svgText centerText">Stream</tspan>
+                                </text>
+                                <image y="441.48895" x="780.67609" height="64" width="64" xlink:href="../img/revenue-structure-logo.png" />
+                            </g>
+                            <g class="fragment svg">
+                                <rect width="684.62732" height="86.96357" class="external" x="66.076904" y="409.06061" />
+                                <text x="315.66385" y="460.05704">
+                                    <tspan x="315.66385" y="460.05704" class="svgText">Customer Segments</tspan>
+                                </text>
+                                <image y="427.08755" x="109.43661" height="59" width="60" xlink:href="../img/customer-segments-logo.png" />
+                            </g>
+                            <g class="fragment svg">
+                                <rect y="502.7226" x="66.076904" height="86.96357" width="338.14844" class="external" />
+                                <text y="558.63977" x="249.46667">
+                                    <tspan y="558.63977" x="249.46667" class="svgText">CRM</tspan>
+                                </text>
+                                <image y="522.13684" x="112.02815" height="52" width="52" xlink:href="../img/crm-logo.png" />
+                            </g>
+                            <g class="fragment svg">
+                                <rect width="338.14844" height="86.96357" x="412.55579" y="502.7226" class="external" />
+                                <text x="557.91736" y="559.06458">
+                                    <tspan x="557.91736" y="559.06458" class="svgText">Channels</tspan>
+                                </text>
+                                <image y="518.13684" x="447.46478" height="60" width="60" xlink:href="../img/channels-logo.png" />
+                            </g>
+                        </g>
+                    </svg>
+                </section>
+
+                <section>
+                    <h2>Resources</h2>
+
+                    <p class="fragment">
+                        Developers and operators<br />
+                        <small>
+                            Software development tools might not change<br />
+                            Knowledge about new patterns and standard necessary<br />
+                            (e.g. federated identity, programming for clusters, dynamic infrastructure, messaging, etc.)
+                        </small>
+                    </p>
+
+                    <p class="fragment">
+                        Architects and designers<br />
+                        <small>
+                            Understanding of SaaS and especially multi-tenancy<br />
+                            Design to cost<br />
+                            Designs that make use of PaaS offerings
+                        </small>
+                    </p>
+
+                    <p class="fragment">
+                        Tools<br />
+                        <small>
+                            From software vendor to service operator<br />
+                            (e.g. monitoring, scaling, operations dashboard, etc.)
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Activities</h2>
+
+                    <p class="fragment">
+                        Move to Platform as a Service if possible<br />
+                        <small>
+                            Reduces operational costs and enables you to catch the long tail
+                        </small>
+                    </p>
+
+                    <p class="fragment">
+                        Standardization and automation rules<br />
+                        <small>
+                            Reduces the effort for upgrades and drives continuous innovation
+                        </small>
+                    </p>
+
+                    <p class="fragment">
+                        New development and IT operations practices<br />
+                        <small>
+                            Operating a multi-tenant SaaS solution needs DevOps skills
+                        </small>
+                    </p>
+
+                    <p class="fragment">
+                        Offer a level of operational excellence that exceeds your customers' expectations
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Costs</h2>
+
+                    <p class="fragment">
+                        Fluctuating load<br />
+                        <small>Ready for scale-out, scale-down, and auto-scaling</small>
+                    </p>
+
+                    <p class="fragment">
+                        Low costs for commodity services
+                    </p>
+
+                    <p class="fragment">
+                        Design-to-Cost<br />
+                        <small>Cost of services influence software architecture</small>
+                    </p>
+
+                    <p class="fragment">
+                        Fair-use policies, limits
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Value Proposition</h2>
+
+                    <p class="fragment">Value proposition = Bundle of products and services</p>
+
+                    <p class="fragment">
+                        How can SaaS help to satisfy customer needs?<br />
+                        <small>
+                            <span class="highlight">Performance</span> – make your solution available faster<br />
+                            <span class="highlight">Customization</span> – customized product while taking benefit from economy of scale/scope<br />
+                            <span class="highlight">Price</span> – we will get back to this later<br />
+                            <span class="highlight">Cost</span> – lower TCO of your solution because of specialization<br />
+                            <span class="highlight">Risk reduction</span> – trials, availability, security<br />
+                            <span class="highlight">Accessibility</span> – let more customers benefit from your solution<br />
+                            <span class="highlight">Convenience</span> – Make your solution easier to use<br />
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Customer Segments</h2>
+
+                    <p class="fragment">
+                        Address new markets with lower price and/or new value prop<br />
+                        <small>
+                            Customer size, new customer segments
+                        </small>
+                    </p>
+
+                    <p class="fragment">
+                        Your product is not ready for the mass market just because it is cheaper<br />
+                        <small>Different customer segments might have different functional needs</small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Channel Opportunities</h2>
+
+                    <p class="fragment">
+                        Make it super-simple to evaluate our services<br />
+                        <small>
+                            Self-service via web<br />
+                            Time-based freemium models<br />
+                            Direct communication with operating departments
+                        </small>
+                    </p>
+                    <p class="fragment">
+                        Web (=self-service) might be an important (new) channel<br />
+                        <small>
+                            Make use of existing market places of cloud vendors<br />
+                            The power of trust!
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Channel Threats</h2>
+
+                    <p class="fragment">
+                        Different pricing model necessary<br />
+                        <small>
+                            Fair dual licensing model is hard to find<br />
+                            What to do with existing customers ("bring your license" model)?
+                        </small>
+                    </p>
+
+                    <p class="fragment">
+                        Don't forget existing channels<br />
+                        <small>
+                            Cannibalization effects for existing partner network<br />
+                            New sales compensation rules necessary
+                        </small>
+                    </p>
+
+                    <p class="fragment">
+                        Different revenue stream<br />
+                        <small>
+                            New revenue sharing model necessary<br />
+                            New KPIs (Customer Lifetime Value instead of one-time revenue)
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>CRM</h2>
+
+                    <p class="fragment">
+                        End user support<br />
+                        <small>You run the solution for the customer</small>
+                    </p>
+
+                    <p class="fragment">
+                        Importance of self-service<br />
+                        <small>Manual processes will make your operational costs explode</small>
+                    </p>
+
+                    <p class="fragment">
+                        Co-creation and Community<br />
+                        <small>
+                            Customization and extensibility<br />
+                            You 'know' the end user<br />
+                            Establish a network of specialists
+                        </small>
+                    </p>
+
+                    <p class="fragment">
+                        Remember: Users can use your system less or turn away<br />
+                        <small>Billing is an important part of your service offering</small>
+                    </p>
+
+                </section>
+
+                <section>
+                    <h2>Revenue Streams</h2>
+
+                    <p class="fragment">
+                        Pricing model<br />
+                        <small>
+                            Subscription-based and/or usage-based<br />
+                            Minimum fee/usage<br />
+                            Rebates, flat fees
+                        </small>
+                    </p>
+
+                    <p class="fragment">
+                        Cash management<br />
+                        <small>Financing, cash-flow management, etc.</small>
+                    </p>
+
+                    <p class="fragment">
+                        Rating, billing, payment<br />
+                        <small>Organization has to be ready for small invoices/payments</small>
+                    </p>
+                </section>
+            </section>
+
+            <section data-state="title">
+                <h2 style="margin-top: 300px;">Thank you for attending!</h2>
+
+                <p>See you next BASTA!</p>
+            </section>
+        </div>
+
+        <div class="footer">
+            BASTA Spring 2016<br />
+            Rainer Stropek | <a href="http://www.software-architects.at">software architects</a>
+        </div>
+    </div>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../lib/js/head.min.js"></script>
+    <script src="../js/reveal.js"></script>
+    <script src="../js/util.js"></script>
+
+    <script>
+        // Full list of configuration options available at:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            margin: 0.1,
+
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+            // Optional reveal.js plugins
+            dependencies: [
+                { src: '../lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '../plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '../plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '../plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '../plugin/zoom-js/zoom.js', async: true },
+                { src: '../plugin/notes/notes.js', async: true }
+            ]
+        });
+
+        Reveal.configure({
+            slideNumber: true
+        })
+    </script>
+
+</body>
+
+</html>
