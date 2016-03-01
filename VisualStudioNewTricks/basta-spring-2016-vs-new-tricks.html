@@ -1,0 +1,587 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>BASTA Spring 2016 - Node.js, npm, gulp &amp; Co for VS2015</title>
+
+    <meta name="description" content="Node.js, npm, gulp etc. - New Tricks for Visual Studio 2015">
+    <meta name="author" content="Rainer Stropek">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="../css/reveal.css">
+    <link rel="stylesheet" href="../css/theme/rainer.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../css/print/pdf.css' : '../css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+
+    <div class="reveal">
+
+        <div class="slides">
+            <section data-state="title">
+                <h2 style="margin-top: 300px;">Node.js, npm, gulp &amp; Co for VS2015</h2>
+
+                <p>Rainer Stropek | <a href="http://www.timecockpit.com">time cockpit</a></p>
+                <p>
+                    <a href="mailto:rainer@timecockpit.com">rainer@timecockpit.com</a> |
+                    <a href="http://www.software-architects.at">Blog</a> |
+                    <a href="https://github.com/rstropek">GitHub</a>
+                </p>
+            </section>
+
+            <section data-state="content">
+                <h2>Agenda (German)</h2>
+
+                <p>
+                    F&#252;r Webentwicklung auf der Microsoft-Plattform gibt es im Moment sehr viel Neues zu lernen.
+                    Nicht nur, dass ASP.NET 5 und die CoreCLR einige grundlegende &#196;nderungen bringen, die gesamte
+                    Toolsammlung f&#252;r Webentwicklung ist nicht mehr wiederzuerkennen. Microsoft wendet sich verst&#228;rkt
+                    bestehenden plattformunabh&#228;ngigen Tools aus der Open-Source-Welt zu und integriert sie in die
+                    kommende Visual-Studio-Version. Das Ergebnis ist eine Vielzahl an neuen Werkzeugen, die auf den
+                    ersten Blick verwirrend wirkt. In dieser Session bringt Rainer Stropek Ordnung ins Chaos, indem er
+                    drei der Tools vorstellt, die f&#252;r Visual-Studio-Webentwicklung neu sind: Node.js, gulp und npm.
+                </p>
+            </section>
+
+            <section data-state="content">
+                <section data-state="title">
+                    <h2 style="margin-top: 300px;">What's the problem?</h2>
+                </section>
+
+                <section>
+                    <h2>Client-side web development</h2>
+
+                    <p class="fragment">Ancient past: All logic on server, client just HTML and very simple scripts</p>
+                    <p class="fragment">
+                        Past: Most logic on server, some view-logic on client<br />
+                        <small>E.g. <a href="http://www.asp.net/mvc/overview/performance/bundling-and-minification">bundling</a> done by ASP.NET</small>
+                    </p>
+                    <p class="fragment">
+                        Today: Single Page Apps (SPA), complex logic on the client<br />
+                        <small>E.g. <a href="http://www.typescriptlang.org">TypeScript</a></small>
+                    </p>
+                    <p class="fragment">Necessity for build process for client-side web development</p>
+                </section>
+
+                <section>
+                    <h2>Tasks</h2>
+
+                    <ul>
+                        <li>Compile (e.g. <a href="http://www.typescriptlang.org">TypeScript</a>, <a href="http://sass-lang.com/">SASS</a> to CSS, etc.)</li>
+                        <li>Transpile (e.g. ES2015 to ES5 with <a href="https://babeljs.io/">Babel</a>)</li>
+                        <li>
+                            Verify (e.g. <a href="JSLint">http://www.jslint.com/</a>, <a href="http://palantir.github.io/tslint/">TSLint</a>,
+                            <a href="http://jshint.com/">JSHint</a>, etc.)
+                        </li>
+                        <li>Compress, optimize (e.g. minify, uglify, generate <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Implementing_image_sprites_in_CSS">image sprites</a>)</li>
+                        <li>Concat</li>
+                        <li>Run tests (e.g. with <a href="https://karma-runner.github.io/0.13/index.html">Karma</a>)</li>
+                        <li>... and not to forget package management</li>
+                    </ul>
+
+                    <p class="fragment">Why not MSBuild and NuGet?</p>
+
+                    <ul class="fragment">
+                        <li>
+                            Existing, well-established ecosystem of tools in the web-dev space<br />
+                            <small>Based on <a href="https://nodejs.org/">Node.js</a></small>
+                        </li>
+                        <li>Need for cross-platform</li>
+                        <li><a href="https://www.nuget.org/">NuGet</a> is not the primary target for JavaScript framework developers</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section data-state="content">
+                <section data-state="title">
+                    <h2 style="margin-top: 300px;"><a href="https://nodejs.org/">Node.js</a></h2>
+                </section>
+
+                <section>
+                    <h2>What is Node.js?</h2>
+
+                    <ul>
+                        <li class="fragment">Program for running JavaScript <em>outside</em> of the browser</li>
+                        <li class="fragment">
+                            Based on Google's <a href="https://developers.google.com/v8/">V8</a> engine
+                                (<a href="https://blogs.windows.com/msedgedev/2016/01/19/nodejs-chakracore-mainline/">Chakra support</a> is on its way)<br />
+                            <small>Lot of <a href="https://nodejs.org/en/docs/es6/">ECMAScript 2015 already built in</a></small>
+                        </li>
+                        <li class="fragment">Server-side JavaScript</li>
+                        <li class="fragment">
+                            Stand-alone JavaScript programs<br />
+                            <small>Ideal for command-line tools as it is cross-platform</small>
+                        </li>
+                        <li class="fragment">
+                            Optimized for building scalable network programs<br />
+                            <small>Async nature makes it so scalable</small>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>What is <a href="https://www.npmjs.com/">NPM</a>?</h2>
+
+                    <p class="fragment">
+                        Node's Package Manager<br />
+                        <small>Similar to NuGet for C#</small>
+                    </p>
+                    <p class="fragment">
+                        Very wide-spread<br />
+                        <small>Compare NuGet and NPM download numbers</small>
+                    </p>
+                    <p class="fragment">Tip: Do <em>not</em> take libraries for client-side web development from NuGet!</p>
+                </section>
+
+                <section>
+                    <h2>Demo: Node.js Console App</h2>
+
+                    <p>Tip: Try <a href="https://www.visualstudio.com/en-us/features/node-js-vs.aspx">Node.js Tools for Visual Studio 2015</a></p>
+
+                    <p><code>npm install <a href="https://www.npmjs.com/package/chalk">chalk</a></code><br/>
+                        JavaScript:</p>
+
+                    <pre><code class="hljs" data-trim contenteditable>
+var chalk = require('chalk');
+var i = 5, j = 2;
+console.log(chalk.red("result is: " + chalk.white.bgBlue(i / j)));
+                    </code></pre>
+
+                    <p><a href="http://www.typescriptlang.org">TypeScript</a>:</p>
+
+                    <pre><code class="hlts" data-trim contenteditable>
+import * as chalk from 'chalk';
+var i : number = 5;
+var j : number = 2;
+console.log(chalk.red("result is: " + chalk.white.bgBlue((i / j).toString())));
+                    </code></pre>
+
+                    <p>Don't forget: <code>typings install chalk --save</code></p>
+                </section>
+
+                <section>
+                    <h2>Demo (continued)</h2>
+
+                    <p><code>tsconfig.json</code></p>
+
+                    <pre><code class="hljs" data-trim contenteditable>
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2015",
+        "sourceMap": false
+    },
+    "exclude": [ "node_modules" ],
+    "files": [ "typings/main.d.ts", "app.ts" ]
+}                  </code></pre>
+
+                    <p>Consider using <a href="https://github.com/TypeStrong/ts-node">ts-node</a> to run TypeScript directly<br/>
+                        <code>ts-node app.ts</code> instead of <code>node app.js</code></p>
+                </section>
+
+                <section>
+                    <h2>Demo: NPM in VS2015</h2>
+
+                    <img src="../img/visual-studio-npm.png" style="max-height: 425px;" />
+
+                    <p><a href="https://github.com/rstropek/Samples/blob/master/AspNetCore1Workshop/90-aspnet-angular/AspNetCore1Angular2Intro/package.json">Sample on GitHub</a></p>
+                </section>
+
+                <section>
+                    <h2>Important Node packages for VS2015</h2>
+
+                    <ul>
+                        <li>
+                            <a href="https://www.npmjs.com/package/typescript">TypeScript</a>
+                            (with <a href="https://www.npmjs.com/package/typings">typings</a>)
+                        </li>
+                        <li><a href="https://www.npmjs.com/package/babel">Babel</a></li>
+                        <li><a href="https://www.npmjs.com/package/gulp">Gulp</a></li>
+                        <li><a href="https://www.npmjs.com/package/grunt">Grunt</a></li>
+                        <li><a href="https://www.npmjs.com/package/bower">Bower</a></li>
+                        <li><a href="https://www.npmjs.com/package/webpack">Webpack</a></li>
+                    </ul>
+                </section>
+            </section>
+
+            <section data-state="content">
+                <section data-state="title">
+                    <h2 style="margin-top: 300px;">Gulp</h2>
+                </section>
+
+                <section>
+                    <h2>Getting started</h2>
+
+                    <ul>
+                        <li>Streaming JavaScript build system based on Node.js</li>
+                        <li>Code-over-configuration<br/>
+                            <small>Remember: It is just Node.js, you can do whatever Node can do</small>
+                        </li>
+                        <li>Many small, single-purposed plugins "piped" together</li>
+                    </ul>
+
+                    <p>
+                        <code>npm install -g gulp </code><br />
+                        <small>Install Gulp globally to have it available in every folder</small>
+                    </p>
+                    <p>
+                        <code>npm install gulp --save-dev</code><br />
+                        <small>Adds Gulp as a dev-dependency to <code>package.json</code></small>
+                    </p>
+                    <p>
+                        <code>npm install gulp-concat --save-dev</code><br />
+                        <small>Adds a Gulp plugin as a dev-dependency to <code>package.json</code></small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Demo: Basic Gulp file</h2>
+
+                    <pre><code class="hljs" data-trim contenteditable>
+// Load Gulp and necessary Gulp plugins
+var gulp = require('gulp');
+var concat = require('gulp-concat'); 
+
+// Add a task
+gulp.task('styles', function() { 
+    return gulp.src('css/*.css')    // Sources (note glob pattern)
+        .pipe(concat('all.css'))    // Plugin-specific arguments
+        .pipe(gulp.dest('dist/'));  // Destination directory
+});
+
+// Add a watch function
+gulp.task('watch', function() { 
+    gulp.watch('css/*.css', ['styles']); 
+});
+
+// Define default task 
+gulp.task('default', ['styles']);
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Demo: Debugging Gulpfile</h2>
+
+                    <p>Use a Node debugger (e.g. <a href="https://github.com/node-inspector/node-inspector">node-inspector</a>)<br/>
+                        <small>See also <a href="http://www.greg5green.com/blog/debugging-gulp-js-tasks/">detailed walk-through</a></small></p>
+
+                    <p>On Windows:<br/>
+                        <small><code>node-debug "C:\Users\&lt;your-user&gt;\AppData\Roaming\npm\node_modules\gulp\bin\gulp.js" default</code></small></p>
+
+                    <img src="../img/debugging-gulp.png" style="max-height: 275px;" />
+                </section>
+
+                <section>
+                    <h2>Important Gulp Plugins</h2>
+
+                    <p>Try <code>gulp-<em>tool</em></code><br />
+                        <small>E.g. gulp-typescript, gulp-babel, gulp-less, etc.</small></p>
+
+                    <p>Get inspired by Gulpfiles of frameworks and seed projects<br/>
+                        <small>E.g. <a href="https://github.com/mgechev/angular2-seed/blob/master/gulpfile.ts">angular2-seed</a></small></p>
+
+                    <p>Here are some important ones:<br/>
+                        <small>gulp-util, del, gulp-rename, gulp-uglify, gulp-concat, gulp-sourcemaps, 
+                        gulp-if, gulp-template, gulp-minify-css, gulp-autoprefixer, gulp-load-plugins,
+                        gulp-inject, gulp-watch</small></p>
+                </section>
+
+                <section>
+                    <h2>Gulp in ASP.NET Projects</h2>
+
+                    <p>VS adds <code>Gulpfile.js</code> to new ASP.NET projects</p>
+
+                    <p>IntelliSense for Gulpfile</p>
+
+                    <p><a href="http://webtooling.visualstudio.com/task-runners/gulp/">Task Runner Explorer</a></p>
+                    <ul>
+                        <li>Comes with VS2015</li>
+                        <li><a href="https://visualstudiogallery.msdn.microsoft.com/8e1b4368-4afb-467a-bc13-9650572db708">Extension</a> for VS2013</li>
+                        <li>Gulp and Grunt out of the box<br/>
+                            <small>
+                                but also
+                                <a href="https://visualstudiogallery.msdn.microsoft.com/8f2f2cbc-4da5-43ba-9de2-c9d08ade4941">NPM</a>,
+                                <a href="https://visualstudiogallery.msdn.microsoft.com/5497fd10-b1ba-474c-8991-1438ae47012a">WebPack</a>,
+                                <a href="https://visualstudiogallery.msdn.microsoft.com/e6bf6a3d-7411-4494-8a1e-28c1a8c4ce99">CMD batch files</a>,
+                                <a href="https://visualstudiogallery.msdn.microsoft.com/9397a2da-c93a-419c-8408-4e9af30d4e36">project-json scripts</a>
+                            </small>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Demo: Gulp in VS2015</h2>
+
+                    <ul>
+                        <li>Create new ASP.NET Core 1.0 web app</li>
+                        <li>Gulpfile walkthrough</li>
+                        <li>IntelliSense in Gulpfile</li>
+                        <li>Task Runner Explorer</li>
+                        <li>Task Bindings in Task Runner Explorer</li>
+                        <li>Scripts in <code>project.json</code></li>
+                    </ul>
+                </section>
+            </section>
+
+            <section data-state="content">
+                <section data-state="title">
+                    <h2 style="margin-top: 300px;">End-to-end Demo</h2>
+                </section>
+
+                <section>
+                    <h2>Demo Scenario</h2>
+
+                    <p>Based on <a href="https://github.com/rstropek/Samples/tree/master/AspNetCore1Workshop/90-aspnet-angular">this sample in GitHub</a></p>
+
+                    <ul>
+                        <li>Uses latest ASP.NET Core 1.0 beta on the server</li>
+                        <li>Uses latest Angular2 beta on the client</li>
+                    </ul>
+
+                    <p>To follow along:</p>
+                    <ul>
+                        <li>Clone my <a href="https://github.com/rstropek/Samples">Samples repo</a><br/>
+                            <small>For this demo you just need the sample in <code>AspNetCore1Workshop/90-aspnet-angular</code></small></li>
+                        <li>Delete <code>config.ts</code> and <code>Gulpfile.ts</code></li>
+                        <li>Install <a href="https://github.com/TypeStrong/ts-node">ts-node</a> globally</li>
+                        <li>Open solution in Visual Studio 2015 &gt;= Update 1</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Packages</h2>
+
+                    <ul>
+                        <li>Take a look at <code>package.json</code><br/>
+                            <small>Note Gulp and Gulp plugins in <code>devDependencies</code></small></li>
+                        <li>Take a look at <code>typings.json</code><br/>
+                            <small>Note Gulp and Gulp plugins are necessary as we write our Gulpfile in TypeScript</small></li>
+                        <li>Note <code>postinstall</code> script in <code>package.json</code></li>
+                        <li>Note <code>prepublish</code> script in <code>project.json</code></li>
+                    </ul>
+
+                    <p>Run <code>npm install</code> to restore packages and typings</p>
+                </section>
+
+                <section>
+                    <h2>Goals of Gulpfile</h2>
+
+                    <ul>
+                        <li>For demo purposes: Use TypeScript instead of JavaScript<br/>
+                            <small>Drawback: Task Runner Explorer cannot handle that</small></li>
+                        <li>Provide a task for cleanup</li>
+                        <li>Compile TypeScript file from <code>src</code> folder into <code>wwwroot</code></li>
+                        <li>Combine all external scripts (<a href="https://github.com/systemjs/systemjs">SystemJS</a>, 
+                            <a href="https://angular.io/">Angular2</a>) and styles (<a href="http://getbootstrap.com/">Bootstrap</a>) into single files</li>
+                        <li>Copy all HTML files from <code>src</code> folder into <code>wwwroot</code></li>
+                        <li>Create a watch task to build on save</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Modularize Gulpfile</h2>
+
+                    <p>Create <code>config.ts</code></p>
+
+                    <pre><code class="hljs" data-trim contenteditable>
+import { join } from 'path';
+
+// Folder names for client code (sources, distribution)
+export const APP_SRC = "src";
+export const APP_DIST = "wwwroot";
+
+// TypeScript sources
+export const TS_SOURCES: string[] =
+    ["typings/browser.d.ts", join(APP_SRC, "**/*.ts")]
+
+// External script dependencies (combined into single file)
+export const SCRIPT_DEPENDENCIES: string[] = [
+    "node_modules/systemjs/dist/system.src.js",
+    "node_modules/angular2/bundles/angular2-polyfills.js",
+    "node_modules/rxjs/bundles/Rx.js",
+    "node_modules/angular2/bundles/angular2.dev.js",
+    "node_modules/angular2/bundles/http.dev.js"
+];
+export const SCRIPT_COMBINED = "scripts.js";
+
+export const STYLES_DEPENDENCIES: string[] = [
+    "node_modules/bootstrap/dist/css/bootstrap.css"
+];
+export const STYLES_COMBINED = "styles.css";
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Gulpfile.js</h2>
+
+                    <pre><code class="hljs" data-trim contenteditable>
+import { join } from 'path';
+import * as gulp from 'gulp';
+import * as del from 'del';
+import * as ts from 'gulp-typescript';
+import * as sourcemaps from 'gulp-sourcemaps';
+import * as concat from 'gulp-concat';
+import * as config from './config';
+
+// Create TypeScript project from tsconfig.json
+var tsClientProject = ts.createProject("tsconfig.json", {
+    typescript: require("typescript")
+});
+
+// Cleanup by deleting target directory
+gulp.task("clean", () => {
+    del.sync(join(config.APP_DIST, "**/*"));
+}); 
+
+// Compile the typescript files of the client app
+gulp.task("clientApp", [], () => {
+    var tsResult = gulp.src(config.TS_SOURCES)
+    	.pipe(ts(tsClientProject))
+  		.pipe(gulp.dest(config.APP_DIST));
+});
+
+gulp.task("index", [], () => {
+    // Combine external scripts into single file
+    gulp.src(config.SCRIPT_DEPENDENCIES)
+        .pipe(sourcemaps.init())
+        .pipe(concat(config.SCRIPT_COMBINED))
+        .pipe(sourcemaps.write("."))
+        .pipe(gulp.dest(config.APP_DIST));
+
+    // Combine external styles into single file
+    gulp.src(config.STYLES_DEPENDENCIES)
+        .pipe(sourcemaps.init())
+        .pipe(concat(config.STYLES_COMBINED))
+        .pipe(sourcemaps.write("."))
+        .pipe(gulp.dest(config.APP_DIST));
+
+    // Copy all HTML files
+    gulp.src(join(config.APP_SRC, "**/*.html"))
+        .pipe(gulp.dest(config.APP_DIST));
+});
+
+//Set a default tasks
+gulp.task("default", ["clean", "clientApp", "index"], () => { });
+
+// Define a watch task
+gulp.task("watch", () => {
+    gulp.watch(join(config.APP_SRC, "**/*"), ["default"]);
+});
+                    </code></pre>
+                </section>            
+
+                <section>
+                    <h2>Run Gulp</h2>
+
+                    <ul>
+                        <li>Run <code>gulp</code> in command line</li>
+                        <li>Publish web app to <a href="https://azure.microsoft.com/en-us/documentation/articles/web-sites-deploy/">Azure App Services</a><br/>
+                            <small>Note how <code>prepublish</code> script in <code>project.json</code> runs</small></li>
+                        <li>Use Gulp in Visual Studio Team Services Build<br/>
+                            <small>See following slides</small></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Gulp in VSTS Build</h2>
+                    
+                    <img src="../img/vsts-build-gulp.png" />
+                </section>
+
+                <section>
+                    <h2>Gulp in VSTS Build</h2>
+
+                    <p>Necessary steps:</p>
+
+                    <ul>
+                        <li><code>npm install</code></li>
+                        <li>
+                            Gulp<br/>
+                            <small>Gulp File Path: <code>AspNetCore1Angular2Intro/Gulpfile.ts</code></small>
+                        </li>
+                        <li>
+                            Copy Files<br/>
+                            <small>Source Folder: <code>$(build.sourcesdirectory)/AspNetCore1Angular2Intro/wwwroot</code><br/>
+                            Contents: <code>**</code><br/>
+                            Target Folder: <code>$(build.artifactstagingdirectory)</code><br />&nbsp;</small>
+                        </li>
+                        <li>
+                            Publish Build Artifacts<br/>
+                            <small>Path to publish: <code>$(build.artifactstagingdirectory)</code><br/>
+                            Artifact name: <code>drop</code><br/>
+                            Artifact type: <code>Server</code></small>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+
+            <section data-state="title">
+                <h2 style="margin-top: 300px;">Thank you for attending!</h2>
+
+                <p>See you next BASTA!</p>
+            </section>
+        </div>
+
+        <div class="footer">
+            BASTA Spring 2016<br />
+            Rainer Stropek | <a href="http://www.software-architects.at">software architects</a>
+        </div>
+    </div>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../lib/js/head.min.js"></script>
+    <script src="../js/reveal.js"></script>
+    <script src="../js/util.js"></script>
+
+    <script>
+        // Full list of configuration options available at:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            margin: 0.1,
+
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+            // Optional reveal.js plugins
+            dependencies: [
+                { src: '../lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '../plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '../plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '../plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '../plugin/zoom-js/zoom.js', async: true },
+                { src: '../plugin/notes/notes.js', async: true }
+            ]
+        });
+
+        Reveal.configure({
+            slideNumber: true
+        })
+    </script>
+
+</body>
+
+</html>
