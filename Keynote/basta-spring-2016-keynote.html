@@ -1,0 +1,436 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>BASTA Spring 2016 - SaaS Rebirth</title>
+
+    <meta name="description" content="How the change to SaaS influences all areas of software development companies">
+    <meta name="author" content="Rainer Stropek">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="../css/reveal.css">
+    <link rel="stylesheet" href="../css/theme/rainer.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../css/print/pdf.css' : '../css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+
+    <style>
+        ul.news {
+            float: left;
+            margin-right: 40px;
+        }
+
+            ul.news li {
+                font-size: 22px;
+            }
+
+        ul.hurdles {
+            float: left;
+            margin-right: 60px;
+        }
+
+        p.private {
+            font-size: 60px;
+        }
+
+        p.challenge {
+            font-size: 250px;
+            color: darkred;
+        }
+
+        p.story {
+            font-size: 75px;
+        }
+
+        span.highlight {
+            color: darkgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="reveal">
+
+        <div class="slides">
+            <section data-state="title" data-transition="fade">
+                <h2 style="margin-top: 300px;">Alles im Umbruch</h2>
+                <p style="margin-bottom: 80px;">&#196;nderungen als Chance f&#252;r Entwickler</p>
+
+                <p>Rainer Stropek | <a href="http://www.timecockpit.com">time cockpit</a></p>
+                <p>
+                    <a href="mailto:rainer@timecockpit.com">rainer@timecockpit.com</a> |
+                    <a href="http://www.software-architects.at">Blog</a> |
+                    <a href="https://github.com/rstropek">GitHub</a>
+                </p>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <h2>Agenda (German)</h2>
+
+                <p style="font-size: 22px;">
+                    Entwicklerinnen und Entwickler im Microsoft-Umfeld f&#252;hlen sich seit einiger Zeit wie
+                    auf einer Achterbahn. Hochgef&#252;hle angesichts vielversprechender, neuer
+                    M&#246;glichkeiten wechseln sich ab mit tiefer Depression, wenn man sich in der
+                    t&#228;glichen Arbeit mit veralteten Tools und Legacy-Code herumplagen muss.
+                    Fasziniert von neuer Technologie, wird man durch Zeitmangel unsanft in die Realit&#228;t
+                    zur&#252;ckgeholt#.
+                </p>
+                <p style="font-size: 22px;">
+                    Als Unternehmer und Entwickler mit &#252;ber zwanzig Jahren Erfahrung
+                    kennt Rainer Stropek diese Probleme nur zu gut. In der Keynote spricht Rainer &#252;ber
+                    seine Strategien im Umgang mit technologischen Entwicklungen auf pers&#246;nlicher und auf
+                    Teamebene. Rainer geht insbesondere auf aktuelle Entwicklungen im Microsoft-Umfeld ein und
+                    zeigt auf, welcher generelle Kulturwandel notwendig ist, um durch die aktuell stattfindenden
+                    Umw&#228;lzungen nicht unter die R&#228;der zu kommen, sondern durch sie zu profitieren.
+                    Die Keynote von Rainer ist Auftakt f&#252;r den erstmalig stattfindenden Innovation Track
+                    auf der BASTA!.
+                </p>
+
+                <p style="font-size: 22px;">
+                    Dieser Vortrag ist entstanden auf Grundlage des Blogartikels
+                    <a href="https://www.timecockpit.com/blog/2015/12/30/No-Time-to-Keep-up-With-Ever-Changing-Technology">
+                        "No Time to Keep up With Ever-Changing Technology?"
+                    </a> von Rainer.
+                </p>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <ul class="news">
+                    <li>.NET Core</li>
+                    <li>.NET 4.6</li>
+                    <li>C# 6</li>
+                    <li>NuGet</li>
+                    <li>Roslyn</li>
+                    <li>ASP.NET 5</li>
+                    <li>MVC 6</li>
+                    <li>Entity Framework 7</li>
+                    <li>HTML5</li>
+                    <li>JavaScript</li>
+                    <li>ECMAScript 2015</li>
+                    <li>TypeScript</li>
+                    <li>RESTful Web APIs</li>
+                    <li>OData</li>
+                    <li>Swagger</li>
+                    <li>Babel</li>
+                    <li>Node.js</li>
+                    <li>NPM</li>
+                    <li>Gulp</li>
+                    <li>Grunt</li>
+                    <li>WebPack</li>
+                </ul>
+                <ul class="news">
+                    <li>Angular 1</li>
+                    <li>Angular 2</li>
+                    <li>CSS</li>
+                    <li>SASS</li>
+                    <li>Less</li>
+                    <li>React</li>
+                    <li>Flux</li>
+                    <li>JSX</li>
+                    <li>GraphQL</li>
+                    <li>RxJS</li>
+                    <li>Web Components</li>
+                    <li>WebSockets</li>
+                    <li>SignalR</li>
+                    <li>Mobile</li>
+                    <li>SQL Server 2016</li>
+                    <li>NoSQL</li>
+                    <li>Windows Server 2016</li>
+                    <li>Touch</li>
+                    <li>Virtual Reality</li>
+                    <li>Augmented Reality</li>
+                </ul>
+                <ul class="news">
+                    <li>Universal Windows Platform Apps</li>
+                    <li>Cordova</li>
+                    <li>Xamarin</li>
+                    <li>Electron</li>
+                    <li>OAuth2</li>
+                    <li>OpenID Connect</li>
+                    <li>Git</li>
+                    <li>GitHub</li>
+                    <li>Azure</li>
+                    <li>Machine Learning</li>
+                    <li>Cortana</li>
+                    <li>SaaS</li>
+                    <li>Unity</li>
+                    <li>DevOps</li>
+                    <li>Microservices</li>
+                    <li>Docker</li>
+                    <li>Visual Studio Update X</li>
+                    <li>Visual Studio Team Services</li>
+                    <li>Continuous Delivery</li>
+                    <li>Scrum</li>
+                </ul>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <ul class="hurdles">
+                    <li>WinForms</li>
+                    <li>WCF</li>
+                    <li>SOAP</li>
+                    <li>Legacy C++</li>
+                    <li>Windows 7</li>
+                    <li>Windows XP?!</li>
+                    <li>Keine Cloud</li>
+                    <li>Kein Internet?!</li>
+                    <li>Visual Studio 2010</li>
+                    <li>Visual Source Safe</li>
+                </ul>
+                <ul class="hurdles">
+                    <li>VB.NET</li>
+                    <li>IE 8</li>
+                    <li>Policies</li>
+                    <li>Personalmangel</li>
+                    <li>Budgetdruck</li>
+                    <li>Termindruck</li>
+                    <li>Wasserfall</li>
+                    <li>Dokumentationsfetisch</li>
+                    <li>Meetings</li>
+                    <li>Emails</li>
+                </ul>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <p class="private">Familie</p>
+                <p class="private">Sport</p>
+                <p class="private">Freizeit</p>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <p class="challenge">Wie?!</p>
+
+                <p class="fragment">Ich werde Manager ;-)</p>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <section>
+                    <p class="story">
+                        <span class="highlight">Faszination</span> f&uuml;r Technik<br />
+                        nicht verlieren
+                    </p>
+
+                    <p class="fragment">Kids im CoderDojo</p>
+                </section>
+
+                <section>
+                    <h2>Faszination</h2>
+
+                    <p class="fragment">
+                        Es gab Zeiten, da wollten wir nicht weg vom Computer<br />
+                        <small>Work-life-balance? <span class="highlight">Work is life!</span></small>
+                    </p>
+                    <p class="fragment">
+                        Neue Tools/Frameworks/Sprachen? <span class="highlight">Neues Spielzeug :-)</span><br />
+                        <small>Z.B. Minecraft, Raspberry Pi</small>
+                    </p>
+                    <p class="fragment">
+                        <span class="highlight">Spielerischer</span> Zugang<br />
+                        <small>
+                            Nicht immer gleich nach dem unmittelbaren Nutzen fragen<br />
+                            Neues zu Lernen macht Spa&szlig; (z.B. <a href="http://phaser.io/">Phaser.io</a>)
+                        </small>
+                    </p>
+                    <p class="fragment">
+                        Aber nicht vergessen, <span class="highlight">wir sind Profis</span><br />
+                        <small>Sich nicht im "Spielen" verlieren</small>
+                    </p>
+                </section>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <section>
+                    <p class="story">
+                        <span class="highlight">Lebenslanges Lernen</span>,<br />
+                        einfach damit abfinden
+                    </p>
+
+                    <p class="fragment">Trainingserfahrung</p>
+                </section>
+
+                <section>
+                    <h2>Lebenslanges Lernen</h2>
+
+                    <p class="fragment">
+                        Wir sind in <span class="highlight">keiner "ruhigen Branche"</span>
+                    </p>
+                    <p class="fragment">
+                        <span class="highlight">Schutzbehauptung</span> "ist nur Mode" vermeiden<br />
+                        <small>Offen f&uuml;r neue Technologien bleiben</small>
+                    </p>
+                    <p class="fragment">
+                        Innovationen kommen schneller, nicht langsamer<br/>
+                        <small>Lebenszyklusmanagement, Abh&auml;ngigkeitsmanagement, Komplexit&auml;tsmanagement etc. werden wichtiger</small>
+                    </p>
+                    <p class="fragment">
+                        Neue <span class="highlight">Vorgehensweisen</span> nicht vergessen<br />
+                        <small>Nicht nur Techniken und Tools lernen</small>
+                    </p>
+                </section>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <section>
+                    <p class="story">
+                        Raus aus der <span class="highlight">Komfortzone</span>
+                    </p>
+
+                    <p class="fragment">Meine regelm&auml;&szlig;ige "BASTA!-Depression" ...</p>
+                </section>
+
+                <section>
+                    <h2>Raus aus der Komfortzone</h2>
+
+                    <p class="fragment">
+                        Wie <span class="highlight">"motiviere"</span> ich mich selbst?<br />
+                        <small>Artikel, Vortr&auml;ge, Side Projects, Open Source Contributions etc.</small>
+                    </p>
+                    <p class="fragment">
+                        Weg zum Verst&auml;ndnis f&uuml;hrt &uuml;ber <span class="highlight">Verwirrung</span><br />
+                        <small>
+                            Verwirrung, Fragen, Unklarheiten sind gut; sie f&ouml;rdern das Verst&auml;ndnis und Merken
+                            (<a href="http://anniemurphypaul.com/2013/02/why-feeling-confused-will-help-you-learn-better/">Artikel</a>)
+                        </small>
+                    </p>
+                    <p class="fragment">
+                        Durch Lesen, Schauen und Zuh&ouml;ren lernt man <span class="highlight">Theorie</span><br />
+                        <small>Wir m&uuml;ssen und die H&auml;nde schmutzig machen und <span class="highlight">trainieren</span></small>
+                    </p>
+                    <p class="fragment">
+                        Nicht vergessen: Die <span class="highlight">Kosten des Scheiterns</span> sind gering<br />
+                        <small>Nicht auf das Argument der "Opportunit&auml;tskosten hereinfallen"</small>
+                    </p>
+                </section>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <section>
+                    <p class="story">
+                        <span class="highlight">Grenzen akzeptieren</span>
+                    </p>
+
+                    <p class="fragment">Mein Leben als IT-Unternehmer ...</p>
+                </section>
+
+                <section>
+                    <h2>Grenzen akzeptieren</h2>
+
+                    <p class="fragment">
+                        Weniger Z&ouml;gern und Optimieren, <span class="highlight">Loslegen</span>!<br />
+                        <small>Sich von der Neugier leiten lassen</small>
+                    </p>
+                    <p class="fragment">
+                        <span class="highlight">Eigenverantwortung</span><br />
+                        <small>Nicht darauf warten, dass jemand anderer die Initiative &uuml;bernimmt</small>
+                    </p>
+                    <p class="fragment">
+                        Mut zur <span class="highlight">L&uuml;cke</span><br />
+                        <small>Lernen, die Relevanz von Themen rasch abzusch&auml;tzen und versuchen, kurzlebige Mode zu vermeiden</small>
+                    </p>
+                    <p class="fragment">
+                        <span class="highlight">Nicht durch Zeitmangel</span> frustrieren lassen<br />
+                        <small>
+                            Regelm&auml;&szlig;ige, kurze Lerneinheiten sind nachgewiesenerma&szlig;en effektiver
+                            (<a href="https://en.wikipedia.org/wiki/Distributed_Practice">Distributed Practice</a>)
+                        </small>
+                    </p>
+                </section>
+            </section>
+
+            <section data-state="content" data-transition="fade">
+                <section>
+                    <p class="story">
+                        BASTA! <span class="highlight">Innovation Day</span>
+                    </p>
+                    <p class="fragment">Pr&auml;miere!</p>
+                </section>
+
+                <section>
+                    <h2>BASTA! Innovation Day</h2>
+
+                    <p class="fragment">
+                        K&uuml;rzere Sessions<br />
+                        <small>"Kosten" einer falschen Entscheidung sind geringer</small>
+                    </p>
+                    <p class="fragment">
+                        Big Picture und das "Warum?" stehen im Vordergrund<br />
+                        <small>Wissensvermittlung folgt bei Bedarf sp&auml;ter</small>
+                    </p>
+                    <p class="fragment">
+                        Experten mit umfangreicher Praxiserfahrung<br />
+                        <small>Rahmenbedingungen und Konsequenzen aus der Praxis</small>
+                    </p>
+                    <p class="fragment">
+                        Abschlie&szlig;ende Diskussions<br />
+                        <small>Bringt eure Fragen, H&uuml;rden, Show-Stopper etc. aus dem t&auml;glichen Leben mit</small>
+                    </p>
+                </section>
+            </section>
+
+            <section data-state="title">
+                <h2 style="margin-top: 300px;">Viel Spa&szlig; beim Innovation Day!</h2>
+            </section>
+        </div>
+
+        <div class="footer">
+            BASTA Spring 2016<br />
+            Rainer Stropek | <a href="http://www.software-architects.at">software architects</a>
+        </div>
+    </div>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../lib/js/head.min.js"></script>
+    <script src="../js/reveal.js"></script>
+    <script src="../js/util.js"></script>
+
+    <script>
+        // Full list of configuration options available at:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            margin: 0.1,
+
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+            // Optional reveal.js plugins
+            dependencies: [
+                { src: '../lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: '../plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '../plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: '../plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: '../plugin/zoom-js/zoom.js', async: true },
+                { src: '../plugin/notes/notes.js', async: true }
+            ]
+        });
+
+        Reveal.configure({
+            slideNumber: true
+        })
+    </script>
+
+</body>
+
+</html>
